@@ -1,6 +1,10 @@
 'use strict';
 
 /* Controllers */
+function WorkAroundController($scope, $navigate) {
+  $scope.$navigate = $navigate;
+};
+
 function HomeCtrl($scope,navSvc,$rootScope) {
     $rootScope.showSettings = false;
     $scope.slidePage = function (path,type) {
