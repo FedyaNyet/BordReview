@@ -12,7 +12,7 @@
         <link rel="stylesheet" type="text/css" href="css/mobile-nav.css" />
         <link rel="stylesheet" type="text/css" href="css/topcoat-mobile-dark.css">
         <title>Angular PhoneGap Sample</title>
-        
+
         <script src="http://debug.phonegap.com/target/target-script-min.js#109r8yfheujls0"></script>
 
         <!-- Comment out the following 2 lines to test on the browser-->
@@ -21,9 +21,9 @@
         
         <!-- In production use min versions -->
         <script src="lib/jx.min.js"></script>
-        <script src="lib/angular.js"></script>
-        <script src="lib/angular-mobile.js"></script>
-        <script src="lib/mobile-nav.js"></script>
+        <script src="lib/angular.min.js"></script>
+        <script src="lib/angular-route.min.js"></script>
+        <script src="lib/angular-touch.min.js"></script>
 
         <script src="js/app.js"></script>
         <script src="js/services.js"></script>
@@ -36,7 +36,7 @@
         </script>
     </head>
     
-    <body ng-controller="WorkAroundController">
-        <mobile-view></mobile-view>
+    <body>
+        <ng-view></ng-view>
     </body>
 </html>
