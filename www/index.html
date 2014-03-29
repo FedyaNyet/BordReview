@@ -20,15 +20,17 @@
         <script src="static/js/lib/angular-route.min.js"></script>
         <script src="static/js/lib/angular-touch.min.js"></script>
 
-        <script src="static/js/index.js"></script>
         <script src="static/js/app.js"></script>
         <script src="static/js/services.js"></script>
+        <script src="static/js/services-phonegap.js"></script>
         <script src="static/js/controllers.js"></script>
-        <script src="static/js/filters.js"></script>
-        <script src="static/js/directives.js"></script>
 
         <script type="text/javascript">
-            app.initialize();
+            document.addEventListener('deviceready',function(){
+                // angular.element(document).ready(function() {
+                //     angular.bootstrap(document);
+                // });
+            }, false);
         </script>
     </head>
     
