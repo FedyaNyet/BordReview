@@ -25,6 +25,9 @@
         <script src="static/js/controllers.js"></script>
 
         <script type="text/javascript">
+            function jsonp_callback(data) {
+                console.log(data.found);
+            }
             document.addEventListener('deviceready',function(){}, false);
         </script>
     </head>
