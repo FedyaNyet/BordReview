@@ -5,3 +5,12 @@
 .topcoat-icon-button--quiet{
 	margin-top: .6em;
 }
+
+.scrollable{
+	overflow: auto;
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	top: 4.3em;
+}
