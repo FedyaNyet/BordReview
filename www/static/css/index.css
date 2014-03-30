@@ -1,3 +1,7 @@
 .icomatic.topcoat-icon.icon{
-  font-size: 24px;
+  font-size: 22px;
+}
+
+.topcoat-icon-button--quiet{
+	margin-top: .6em;
 }
