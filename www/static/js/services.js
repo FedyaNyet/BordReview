@@ -1,5 +1,5 @@
 'use strict';
 
 myApp.factory('cardsService',[function(){
-	console.log('here');
+	console.log('giving cards!');
 }])

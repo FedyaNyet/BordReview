@@ -1,38 +1,42 @@
 <!DOCTYPE html>
 <html xmlns:ng="http://angularjs.org" lang="en" ng-app="myApp">
     <head>
+        <title>NeuroRad</title>
         <meta charset="utf-8" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0"/>
 
+        <link rel="stylesheet" type="text/css" href="static/css/reset.css" />
         <link rel="stylesheet" type="text/css" href="static/css/index.css" />
+        <link rel="stylesheet" type="text/css" href="static/css/icomatic/icomatic.css"/>
         <link rel="stylesheet" type="text/css" href="static/css/topcoat-mobile-light.min.css">
-        <title>NeuroRad</title>
 
+        <!-- DE-BUG ONLY -->
         <script src="http://debug.phonegap.com/target/target-script-min.js#843877"></script>
 
         <!-- cordova-2.7.0.js will 404 while viewed in browser-->
         <script type="text/javascript" src="cordova-2.7.0.js"></script>
 
-        <script src="static/js/lib/jx.min.js"></script>
+        <script>
+            document.addEventListener("deviceready", function(e){
+                console.log('deviceready');
+            }, false);
+        </script>
+
+        <!-- Angular Library -->
         <script src="static/js/lib/angular.min.js"></script>
         <script src="static/js/lib/angular-route.min.js"></script>
         <script src="static/js/lib/angular-touch.min.js"></script>
-
         <script src="static/js/app.js"></script>
         <script src="static/js/services.js"></script>
         <script src="static/js/services-phonegap.js"></script>
         <script src="static/js/controllers.js"></script>
+        <script src="http://include.jaydata.org/jaydata.js"></script>
 
-        <script type="text/javascript">
-            function jsonp_callback(data) {
-                console.log(data.found);
-            }
-            document.addEventListener('deviceready',function(){}, false);
-        </script>
     </head>
-    
     <body>
+
         <ng-view></ng-view>
+
     </body>
 </html>
