@@ -24,6 +24,9 @@ myApp.controller('ListCtrl',
             if ($index == 0) return "topcoat-list__item--first";
             return "topcoat-list__item";
         }
+        $scope.showNav = function(){
+            $('.side-nav').toggleClass('left-nav');
+        };
 
         // Todo.readAll().then(function (todos) {
         //     $scope.$apply(function () {
