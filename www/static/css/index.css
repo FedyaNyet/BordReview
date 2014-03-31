@@ -39,11 +39,11 @@ body {
 }
 .side-nav__list__item {
     padding: 0;
-    background-color: #707070;
+    background-color: #353535;
     border-color: #9daca9;
 }
 .side-nav__list__item.is-active {
-    background-color: #353535;
+    background-color: #707070;
 }
 .side-nav__button {
     display:block;
