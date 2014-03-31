@@ -5,6 +5,8 @@ var myApp = angular
     .module('myApp', ['ngRoute', 'ngTouch', 'myApp.services'])
     .config(['$routeProvider', function($routeProvider) {
         $routeProvider.when('/', {templateUrl: 'templates/listView.html', controller: 'ListCtrl'});
+        $routeProvider.when('/review', {templateUrl: 'templates/review.html', controller: 'ListCtrl'});
+        $routeProvider.when('/settings', {templateUrl: 'templates/settings.html', controller: 'ListCtrl'});
         $routeProvider.otherwise({redirectTo: '/'});
     }]);
 //     .config('indexedDBProvider', function ($indexedDBProvider) {

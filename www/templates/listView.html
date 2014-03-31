@@ -1,42 +1,26 @@
-<nav class="side-nav">
-    <div class="topcoat-list__container side-nav__list__container">
-        <ul class="topcoat-list side-nav__list">
-            <li class="topcoat-list__item side-nav__list__item">
-                <a href="#" class="side-nav__button">Item</a>
-            </li>
-            <li class="topcoat-list__item side-nav__list__item is-active">
-                <a href="#" class="side-nav__button">Item</a>
-            </li>
-            <li class="topcoat-list__item side-nav__list__item">
-                <a href="#" class="side-nav__button">Item</a>
+
+<div class="topcoat-navigation-bar">
+    <div class="topcoat-navigation-bar__item left quarter">
+        <a id="slide-menu-button" class="topcoat-icon-button--quiet slide-menu-button" ng-click="toggleNav()">
+            <span class="topcoat-icon topcoat-icon--menu-stack"></span>
+        </a>
+    </div>
+    <div class="topcoat-navigation-bar__item center half">
+        <h1 class="topcoat-navigation-bar__title">BordReview</h1>
+    </div>
+    <div class="topcoat-navigation-bar__item right quarter">
+        <a class="topcoat-icon-button--quiet" onclick="alert('Search clicked')">
+            <span class="icomatic topcoat-icon icon">search</span>
+        </a>
+    </div>
+</div>
+<div class="main-content topcoat-list__container list ">
+    <div class="page scrollable">
+        <h3 class="topcoat-list__header">Some List of Features</h3>
+        <ul class="topcoat-list">
+            <li ng-repeat="card in cards" class="topcoat-list__item">
+               <span>{{card.id}}) {{card.answer}}</span>
             </li>
         </ul>
     </div>
-</nav>
-<div class="slide">
-    <div class="topcoat-navigation-bar">
-        <div class="topcoat-navigation-bar__item left quarter">
-            <a id="slide-menu-button" class="topcoat-icon-button--quiet slide-menu-button" ng-click="showNav()">
-                <span class="topcoat-icon topcoat-icon--menu-stack"></span>
-            </a>
-        </div>
-        <div class="topcoat-navigation-bar__item center half">
-            <h1 class="topcoat-navigation-bar__title">BordReview</h1>
-        </div>
-        <div class="topcoat-navigation-bar__item right quarter">
-            <a class="topcoat-icon-button--quiet" onclick="alert('Search clicked')">
-                <span class="icomatic topcoat-icon icon">search</span>
-            </a>
-        </div>
-    </div>
-    <div class="main-content topcoat-list__container list ">
-        <div class="scrollable">
-            <h3 class="topcoat-list__header">Some List of Features</h3>
-            <ul class="topcoat-list">
-                <li ng-repeat="card in cards" class="topcoat-list__item">
-                   <span>{{card.id}}) {{card.answer}}</span>
-                </li>
-            </ul>
-        </div>
-    </div>>
 </div>

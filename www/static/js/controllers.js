@@ -1,5 +1,18 @@
 'use strict';
 
+myApp.controller('NavController',['$rootScope','$scope', '$location', function($rootScope, $scope, $location){
+
+    
+    $rootScope.toggleNav = function(){
+        $('.side-nav').toggleClass('left-nav');
+    };
+    
+    $scope.isActive = function(route) {
+        console.log(route,$location.path());
+        return route === $location.path();
+    }
+}]);
+
 myApp.controller('ListCtrl',
     ['$rootScope', '$scope', 'cardsService', function ($rootScope, $scope, cardsService) {
         
@@ -24,9 +37,6 @@ myApp.controller('ListCtrl',
             if ($index == 0) return "topcoat-list__item--first";
             return "topcoat-list__item";
         }
-        $scope.showNav = function(){
-            $('.side-nav').toggleClass('left-nav');
-        };
 
         // Todo.readAll().then(function (todos) {
         //     $scope.$apply(function () {
