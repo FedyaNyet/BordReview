@@ -36,7 +36,7 @@
     </head>
     <body ng-controller="AppController">
         <div id="content-wrapper">
-            <ng-include src="'templates/side-nav.html'" onload="hideNav()"></ng-include>
+            <ng-include src="'templates/side-nav.html'" onload="hideNav()"  ng-controller="NavController"></ng-include>
             <div class="slide">
                 <ng-view></ng-view>
             </div>

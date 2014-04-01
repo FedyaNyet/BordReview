@@ -7,11 +7,8 @@ myApp.controller('AppController', ['$rootScope', '$location', 'cardsService',
             console.log('loaded db');
         });
 
-        $rootScope.hideNav = function(){
-            $('.slide').removeClass('nav-open');
-        }
-        
-        $rootScope.$on('$routeChangeStart', function(next, current) { 
+        $rootScope.$on('$locationChangeStart', function(event, next, current) { 
+            console.log(current, ' -> ',next);
             $rootScope.hideNav();
         });
     }
@@ -19,14 +16,27 @@ myApp.controller('AppController', ['$rootScope', '$location', 'cardsService',
 
 myApp.controller('NavController',['$rootScope','$scope', '$location', 'cardsService', 
     function($rootScope, $scope, $location, cardsService){
-       
+
         $rootScope.toggleSideNav = function(){
-            console.log( $('.side-nav'));
             $('.slide').toggleClass('nav-open');
         };
+
+        $rootScope.hideNav = function(event){
+            $('.slide').removeClass('nav-open');
+        };
+
+        $scope.sideNaveItemClick = function(event){
+            var href = event.target.href;
+            href = href.slice(href.indexOf('#')+1)
+            if(href === $location.path()){
+                $rootScope.hideNav(); //locationChangeStart won't be fired...
+            }
+            $location.path(href);
+        };
+
         $scope.sideNavItemIsActive = function(route) {
             return route === $location.path();
-        }
+        };
     }
 ]);
 
@@ -46,9 +56,4 @@ myApp.controller('ListCtrl',['$scope', 'cardsService',
             return "topcoat-list__item";
         }
     }
-]);
-
-
-
-
-                     
+]);       
