@@ -2,7 +2,11 @@
 
 myApp.controller('NavController',['$rootScope','$scope', '$location', 'cardsService', function($rootScope, $scope, $location, cardsService){
 
-    cardsService.init();
+    // window.plugins.spinnerDialog.show();
+    cardsService.init().then(function(){
+        // window.plugins.spinnerDialog.hide();
+        console.log('loaded db');
+    });
 
     $rootScope.toggleNav = function(){
         $('.side-nav').toggleClass('left-nav');
