@@ -12,7 +12,7 @@ myApp.factory('cardsService',['$q',function($q){
 		init:function(){
 			var deferred = $q.defer();
 			db = openDatabase('NeuroRad', '1.0', 'NeuroRad', 2 * 1024 * 1024);
-			if(!localStorage.getItem('created')){
+			if(!window.localStorage.getItem('created')){
 
 				db.transaction(function (tx) {
 					var query =
@@ -23,7 +23,7 @@ myApp.factory('cardsService',['$q',function($q){
 						queries += "INSERT INTO `card` (`id`, `question`, `answer`, `status`) VALUES ("+ id + ",\"" + card.question +"\",\""+ card.answer + "\","+ card.status +"); ";
 					}
 					tx.executeSql(query, [], function(){
-						localStorage.setItem('created','true');
+						window.localStorage.setItem('created','true');
 						deffered.resolve();
 					}, function(){
 						console.log("Could not create db.");
