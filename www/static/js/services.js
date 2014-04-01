@@ -15,24 +15,24 @@ myApp.factory('cardsService',['$q',function($q){
 			if(!window.localStorage.getItem('created')){
 
 				db.transaction(function (tx) {
-					var query =
-						"CREATE TABLE `card` (`id` int(11) NOT NULL, `question` varchar(255), `answer` varchar(255), `status` int(2), PRIMARY KEY (`id`)); "+
-						"CREATE TABLE `photo` (`id` int(11) NOT NULL,`path` varchar(50), `position` int(5),`card_id` int(11) NOT NULL, PRIMARY KEY (`id`)); "
+					tx.executeSql('CREATE TABLE `card` (`id` int(11) NOT NULL, `question` varchar(255), `answer` varchar(255), `status` int(2), PRIMARY KEY (`id`));');
+					tx.executeSql('CREATE TABLE `photo` (`id` int(11) NOT NULL,`path` varchar(50), `position` int(5),`card_id` int(11) NOT NULL, PRIMARY KEY (`id`));');
+					var variables = []
 					for(var id in fixture){
 						var card = fixture[id];
-						query += "INSERT INTO `card` (`id`, `question`, `answer`, `status`) VALUES ("+ id + ",\"" + card.question +"\",\""+ card.answer + "\","+ card.status +"); ";
+						variables.push(id);
+						variables.push();
+						variables.push();
+						variables.push();
+						tx.executeSql('INSERT INTO `card` (`id`, `question`, `answer`, `status`) VALUES (?,?,?,?);',[id, card.question, card.answer, card.status]);
 					}
-					tx.executeSql(query, [], 
-						function(){
-							window.localStorage.setItem('created','true');
-							deferred.resolve();
-						}, 
-						function(tx, error){
-							console.log("cardsService.init() ERROR: "+ error.message);
-							deferred.reject();
-						}
-					);
-				});
+					window.localStorage.setItem('created','true');
+				}, function(){
+                    deferred.reject(); 
+				}, function(){
+                    deferred.resolve(); 
+				}
+				);
 			}else{
 				deferred.resolve();
 			}
@@ -46,7 +46,7 @@ myApp.factory('cardsService',['$q',function($q){
 	                    deferred.resolve(rs); 
 	            	},
 	            	function(tx, error){
-						console.log("cardsService.readAll() Error: "+ error.message);
+						console.log("cardsService.readAll() Error code:"+ error.code + " - " + error.message);
 	                    deferred.reject(); 
 	                }
                 );
