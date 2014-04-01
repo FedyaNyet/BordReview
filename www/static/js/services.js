@@ -30,6 +30,8 @@ myApp.factory('cardsService',['$q',function($q){
 						deffered.reject();
 					});
 				});
+			}else{
+				deferred.resolve();
 			}
             return deferred.promise;
 		},

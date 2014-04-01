@@ -8,6 +8,10 @@ myApp.controller('NavController',['$rootScope','$scope', '$location', 'cardsServ
         console.log('loaded db');
     });
 
+    $rootScope.$on('$routeChangeStart', function(next, current) { 
+        $rootScope.toggleNav();
+    });
+
     $rootScope.toggleNav = function(){
         $('.side-nav').toggleClass('left-nav');
     };
