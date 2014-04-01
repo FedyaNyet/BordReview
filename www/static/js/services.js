@@ -20,7 +20,7 @@ myApp.factory('cardsService',['$q',function($q){
 						"CREATE TABLE `photo` (`id` int(11) NOT NULL,`path` varchar(50), `position` int(5),`card_id` int(11) NOT NULL, PRIMARY KEY (`id`)); "
 					for(var id in fixture){
 						var card = fixture[id];
-						queries += "INSERT INTO `card` (`id`, `question`, `answer`, `status`) VALUES ("+ id + ",\"" + card.question +"\",\""+ card.answer + "\","+ card.status +"); ";
+						query += "INSERT INTO `card` (`id`, `question`, `answer`, `status`) VALUES ("+ id + ",\"" + card.question +"\",\""+ card.answer + "\","+ card.status +"); ";
 					}
 					tx.executeSql(query, [], 
 						function(){
