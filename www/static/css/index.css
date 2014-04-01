@@ -25,7 +25,7 @@ body {
     position:absolute;
     top:0;
     left:0;
-    width:200px;
+    width:140px;
     height:100%;
     background-color:#353535;
 }
@@ -59,7 +59,7 @@ body {
 }
 
 .slide.nav-open {
-	left: 200px;
+	left:140px;
 }
 
 .slide {
@@ -114,11 +114,11 @@ body {
     }
     .slide {
     	position:absolute;
-        left: 200px;
+        left: 140px;
         right:0;
     }
     .topcoat-navigation-bar{
-    	left: -200px;
+    	left: -140px;
     }
     .side-nav{
     	top:69px;
