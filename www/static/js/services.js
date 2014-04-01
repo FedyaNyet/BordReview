@@ -22,13 +22,16 @@ myApp.factory('cardsService',['$q',function($q){
 						var card = fixture[id];
 						queries += "INSERT INTO `card` (`id`, `question`, `answer`, `status`) VALUES ("+ id + ",\"" + card.question +"\",\""+ card.answer + "\","+ card.status +"); ";
 					}
-					tx.executeSql(query, [], function(){
-						window.localStorage.setItem('created','true');
-						deffered.resolve();
-					}, function(){
-						console.log("Could not create db.");
-						deffered.reject();
-					});
+					tx.executeSql(query, [], 
+						function(){
+							window.localStorage.setItem('created','true');
+							deferred.resolve();
+						}, 
+						function(tx, error){
+							console.log("cardsService.init() ERROR: "+ error.message);
+							deferred.reject();
+						}
+					);
 				});
 			}else{
 				deferred.resolve();
@@ -38,12 +41,15 @@ myApp.factory('cardsService',['$q',function($q){
 		readAll:function(){
 			var deferred = $q.defer();
             db.transaction(function(tx) {
-            	tx.executeSql("SELECT * FROM `card`",[],function(tx, rs){
-                    deferred.resolve(rs); 
-            	},function(){
-            		console.log("readAll - Error.");
-                    deferred.reject(); 
-                });
+            	tx.executeSql("SELECT * FROM `card`",[],
+	        		function(tx, rs){
+	                    deferred.resolve(rs); 
+	            	},
+	            	function(tx, error){
+						console.log("cardsService.readAll() Error: "+ error.message);
+	                    deferred.reject(); 
+	                }
+                );
             });
             return deferred.promise;
 	    },
