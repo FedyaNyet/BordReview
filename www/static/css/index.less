@@ -1,0 +1,147 @@
+//Variables
+@side-nav-width: 140px;
+@side-nav-dark-grey: #353535;
+@nav-bar-height: 69px;
+
+//Mark Up
+html{
+    &, body{
+        margin:0;
+        padding:0;
+        height: 100%;
+    }
+
+    body {
+        font-family: source-sans-pro, sans-serif;
+        -webkit-font-smoothing: antialiased;
+
+        #content-wrapper{
+            width: inherit;
+            height: 100%;
+            overflow-x: hidden;
+            display: block;
+            position: relative;
+
+            .topcoat-navigation-bar {
+                position:absolute;
+                width:100%;
+                z-index:100;
+
+                .topcoat-icon-button--quiet{
+                    margin-top: .6em;
+                    
+                    &:hover{
+                        background-color: transparent;
+                        box-shadow: none;
+                        border: 1px solid transparent;
+                        color: #969696;
+                    }
+
+                    .icomatic.topcoat-icon.icon{
+                        font-size: 26px;
+                        height: 26px;
+                        line-height: 26px;
+                    }
+                }
+            }
+
+            .side-nav {
+                display:block;
+                position:absolute;
+                top:0;
+                left:0;
+                width: @side-nav-width;
+                height:100%;
+                background-color:@side-nav-dark-grey;
+
+                .side-nav__list__container {
+                    border-top:none;
+                    border-bottom:none;
+
+                    .side-nav__list {
+                        border:none;
+
+                        .side-nav__list__item {
+                            padding: 0;
+                            background-color: @side-nav-dark-grey;
+                            border-color: #9daca9;
+
+                            &.is-active {
+                                background-color: #707070;
+                            }
+
+                            .side-nav__button {
+                                display:block;
+                                width:100%;
+                                height:100%;
+                                padding: 1.25rem;
+                                box-sizing: border-box;
+                                color: #F1F1F1;
+                                text-decoration:none;
+
+                                &:active {
+                                    background-color:@side-nav-dark-grey;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .slide {
+                position: absolute;
+                width:100%;
+                height:100%;
+                -webkit-transition-duration: .5s;
+                -webkit-transform: translate3d(0, 0, 0);
+                -moz-box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.57);
+                -webkit-box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.57);
+                box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, 0.57);
+                &.nav-open {
+                    left:@side-nav-width;
+                }
+
+                .page{
+                    background-color:#dfe2e2;
+                    overflow: hidden;
+                    position: absolute;
+                    bottom: 0px;
+                    left: 0px;
+                    right: 0px;
+                    top: @nav-bar-height;
+
+                    &.scrollable{
+                        overflow: auto;
+                        position: absolute;
+                        bottom: 0px;
+                        left: 0px;
+                        right: 0px;
+                        top: @nav-bar-height;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+@media screen and (min-width: 640px) { /* @media screen and (min-width: 880px) { */
+
+    .side-nav{
+        top:@nav-bar-height;
+    }
+
+    .slide {
+    	position:absolute;
+        left: @side-nav-width;
+        right:0;
+
+        .topcoat-navigation-bar{
+            left: -@side-nav-width;
+
+            .slide-menu-button {
+                display:none;
+            }
+        }
+    }
+}
