@@ -1,27 +1,37 @@
 'use strict';
 
-myApp.controller('NavController',['$rootScope','$scope', '$location', 'cardsService', function($rootScope, $scope, $location, cardsService){
+myApp.controller('AppController', ['$rootScope', '$location', 'cardsService', 
+    function($rootScope, $location, cardsService){
 
-    // window.plugins.spinnerDialog.show();
-    cardsService.init().then(function(){
-        // window.plugins.spinnerDialog.hide();
-        console.log('loaded db');
-    });
+        cardsService.init().then(function(){
+            console.log('loaded db');
+        });
 
-    $rootScope.$on('$routeChangeStart', function(next, current) { 
-        $rootScope.toggleNav();
-    });
-
-    $rootScope.toggleNav = function(){
-        $('.side-nav').toggleClass('left-nav');
-    };
-    $scope.isActive = function(route) {
-        return route === $location.path();
+        $rootScope.hideNav = function(){
+            $('.slide').removeClass('nav-open');
+        }
+        
+        $rootScope.$on('$routeChangeStart', function(next, current) { 
+            $rootScope.hideNav();
+        });
     }
-}]);
+]);
 
-myApp.controller('ListCtrl',
-    ['$scope', 'cardsService', function ($scope, cardsService) {
+myApp.controller('NavController',['$rootScope','$scope', '$location', 'cardsService', 
+    function($rootScope, $scope, $location, cardsService){
+       
+        $rootScope.toggleSideNav = function(){
+            console.log( $('.side-nav'));
+            $('.slide').toggleClass('nav-open');
+        };
+        $scope.sideNavItemIsActive = function(route) {
+            return route === $location.path();
+        }
+    }
+]);
+
+myApp.controller('ListCtrl',['$scope', 'cardsService', 
+    function ($scope, cardsService) {
         
         $scope.cards = [];
         cardsService.readAll().then(function (results) {
@@ -35,7 +45,8 @@ myApp.controller('ListCtrl',
             if ($index == 0) return "topcoat-list__item--first";
             return "topcoat-list__item";
         }
-}]);
+    }
+]);
 
 
 

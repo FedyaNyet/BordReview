@@ -26,7 +26,7 @@ myApp.factory('cardsService',['$q',function($q){
 						localStorage.setItem('created','true');
 						deffered.resolve();
 					}, function(){
-						console.log("could not create db");
+						console.log("Could not create db.");
 						deffered.reject();
 					});
 				});
@@ -41,8 +41,8 @@ myApp.factory('cardsService',['$q',function($q){
             	tx.executeSql("SELECT * FROM `card`",[],function(tx, rs){
                     deferred.resolve(rs); 
             	},function(){
-                	console.log('ere');
-                    deferred.reject("Error, please re-run the application!"); 
+            		console.log("readAll - Error.");
+                    deferred.reject(); 
                 });
             });
             return deferred.promise;

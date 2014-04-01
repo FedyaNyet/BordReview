@@ -11,7 +11,7 @@
         <link rel="stylesheet" type="text/css" href="static/css/topcoat-mobile-light.min.css">
         <link rel="stylesheet" type="text/css" href="static/css/index.css" />
 
-        <!-- DE-BUG ONLY -->
+        <!-- DE-BUG ONLY
         <script src="http://debug.phonegap.com/target/target-script-min.js#843877"></script>
 
         <!-- cordova-2.7.0.js will 404 while viewed in browser-->
@@ -34,23 +34,9 @@
         <script src="static/js/controllers.js"></script>
 
     </head>
-    <body>
+    <body ng-controller="AppController">
         <div id="content-wrapper">
-            <nav class="side-nav" ng-controller="NavController">
-                <div class="topcoat-list__container side-nav__list__container">
-                    <ul class="topcoat-list side-nav__list">
-                        <li class="topcoat-list__item side-nav__list__item" ng-class="{'is-active':isActive('/')}">
-                            <a href="#/" class="side-nav__button">List</a>
-                        </li>
-                        <li class="topcoat-list__item side-nav__list__item" ng-class="{'is-active':isActive('/review')}">
-                            <a href="#/review" class="side-nav__button">Review</a>
-                        </li>
-                        <li class="topcoat-list__item side-nav__list__item" ng-class="{'is-active':isActive('/settings')}">
-                            <a href="#/settings" class="side-nav__button">Settings</a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
+            <ng-include src="'templates/side-nav.html'" onload="hideNav()"></ng-include>
             <div class="slide">
                 <ng-view></ng-view>
             </div>

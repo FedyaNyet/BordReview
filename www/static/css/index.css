@@ -58,7 +58,7 @@ body {
     background-color:#353535;
 }
 
-.left-nav ~ .slide {
+.slide.nav-open {
 	left: 200px;
 }
 
@@ -81,6 +81,12 @@ body {
 
 .topcoat-icon-button--quiet{
 	margin-top: .6em;
+}
+
+.topcoat-icon-button--quite:hover{
+    background-color: transparent;
+    border: 0px;
+    box-shadow: none;
 }
 
 .page{
