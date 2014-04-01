@@ -51,6 +51,10 @@ myApp.controller('ListCtrl',['$scope', 'cardsService',
             }
         });
 
+        $scope.search = function(query){
+            alert(query);
+        }
+
         $scope.getListItemClass = function($index){
             if ($index == 0) return "topcoat-list__item--first";
             return "topcoat-list__item";

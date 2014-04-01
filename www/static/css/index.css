@@ -27,6 +27,8 @@ html body #content-wrapper .topcoat-navigation-bar .topcoat-icon-button--quiet:h
   background-color: transparent;
   box-shadow: none;
   border: 1px solid transparent;
+}
+html body #content-wrapper .topcoat-navigation-bar .topcoat-icon-button--quiet.ng-click-active {
   color: #969696;
 }
 html body #content-wrapper .topcoat-navigation-bar .topcoat-icon-button--quiet .icomatic.topcoat-icon.icon {
