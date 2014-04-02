@@ -7,23 +7,38 @@ myApp.factory('cardsService',['$q',function($q){
 		init:function(){
 			var deferred = $q.defer();
 			db = openDatabase('NeuroRad', '1.0', 'NeuroRad', 2 * 1024 * 1024);
-			if(!window.localStorage.getItem('created')){
+			if(!window.localStorage.getItem('cards') || !window.localStorage.getItem('photoes')){
 				db.transaction(function (tx) {
-					tx.executeSql('DROP TABLE IF EXISTS `card`;');
-					tx.executeSql('DROP TABLE IF EXISTS `photo`;');
-					tx.executeSql('CREATE TABLE `card` (`id` int(11) NOT NULL, `question` varchar(255), `answer` varchar(255), `status` int(2), PRIMARY KEY (`id`));');
-					tx.executeSql('CREATE TABLE `photo` (`id` int(11) NOT NULL,`path` varchar(50), `position` int(5),`card_id` int(11) NOT NULL, PRIMARY KEY (`id`));');
-					for(var card in fixture.cards){
-						tx.executeSql('INSERT INTO `card` (`id`, `question`, `answer`, `status`) VALUES (?,?,?,?);',[card.id, card.question, card.answer, card.status]);
-					}
-					for(var photo in fixture.photos){
-						tx.executeSql('INSERT INTO `photo` (`id`, `path`, `position`, `card_id`) VALUES (?,?,?,?);',[photo.id, photo.question, photo.answer, photo.status]);
-					}
-					window.localStorage.setItem('created','true');
-				}, function(){ //Error
+					if(!window.localStorage.getItem('cards'))
+						tx.executeSql('CREATE TABLE `card` (`id` int(11) NOT NULL, `question` varchar(255), `answer` varchar(255), `status` int(2), PRIMARY KEY (`id`));',[], 
+							function(){
+								window.localStorage.setItem('cards','created');
+								for(var idx in fixture.cards){
+									var card = fixture.cards[idx];
+									tx.executeSql('INSERT INTO `card` (`id`, `question`, `answer`, `status`) VALUES (?,?,?,?);',[card.id, card.question, card.answer, card.status]);
+								}
+							},
+							function(tx, error){
+								console.log(error.code, error.message);
+							}
+						);
+					if(!window.localStorage.getItem('photoes'))
+						tx.executeSql('CREATE TABLE `photo` (`id` int(11) NOT NULL,`path` varchar(50), `position` int(5),`card_id` int(11) NOT NULL, PRIMARY KEY (`id`));',[], 
+							function(){
+								window.localStorage.setItem('photoes','created');
+								for(var idx in fixture.photos){
+									var photo = fixture.photos[idx];
+									tx.executeSql('INSERT INTO `photo` (`id`, `path`, `position`, `card_id`) VALUES (?,?,?,?);',[photo.id, photo.path, photo.position, photo.card_id]);
+								}
+							},
+							function(tx, error){
+								console.log(error.code, error.message);
+							}
+						);
+				}, function(){ //transaction Error
                     deferred.reject(); 
-				}, function(){ //Success
-                    deferred.resolve(); 
+				}, function(){
+    				deferred.resolve(); 
 				});
 			}else{
 				deferred.resolve();
@@ -33,7 +48,7 @@ myApp.factory('cardsService',['$q',function($q){
 		readAll:function(){
 			var deferred = $q.defer();
             db.transaction(function(tx) {
-            	tx.executeSql("SELECT * FROM `card`",[],
+            	tx.executeSql("SELECT c.id, answer, p.path FROM `card` as c JOIN `photo` as p on p.card_id = c.id where p.position = 0 ORDER BY c.id",[],
 	        		function(tx, rs){
 	                    deferred.resolve(rs); 
 	            	},
@@ -171,54 +186,54 @@ var fixture = {
 		},
 	],
 	photos:[
-		{id: 1, 	path: "/static/img/cases/2-10.jpg", 	position:0, cardId: 10},
-		{id: 2, 	path: "/static/img/cases/2-11a.jpg", 	position:0, cardId: 11},
-		{id: 3, 	path: "/static/img/cases/2-11b.jpg", 	position:1, cardId: 11},
-		{id: 4, 	path: "/static/img/cases/2-12.jpg", 	position:0, cardId: 12},
-		{id: 5, 	path: "/static/img/cases/2-13.jpg", 	position:0, cardId: 13},
-		{id: 6, 	path: "/static/img/cases/2-14a.jpg", 	position:0, cardId: 14},
-		{id: 7, 	path: "/static/img/cases/2-14b.jpg", 	position:1, cardId: 14},
-		{id: 8, 	path: "/static/img/cases/2-15.jpg", 	position:0, cardId: 15},
-		{id: 9, 	path: "/static/img/cases/2-16.jpg", 	position:0, cardId: 16},
-		{id: 10, 	path: "/static/img/cases/2-17.jpg", 	position:0, cardId: 17},
-		{id: 11, 	path: "/static/img/cases/2-18a.jpg", 	position:0, cardId: 18},
-		{id: 12, 	path: "/static/img/cases/2-18b.jpg", 	position:1, cardId: 18},
-		{id: 13, 	path: "/static/img/cases/2-19.jpg", 	position:0, cardId: 19},
-		{id: 14, 	path: "/static/img/cases/2-1a.jpg", 	position:0, cardId: 1},
-		{id: 15, 	path: "/static/img/cases/2-1b.jpg", 	position:1, cardId: 1},
-		{id: 16, 	path: "/static/img/cases/2-20a.jpg", 	position:0, cardId: 20},
-		{id: 17, 	path: "/static/img/cases/2-20b.jpg", 	position:1, cardId: 20},
-		{id: 18, 	path: "/static/img/cases/2-21a.jpg", 	position:0, cardId: 21},
-		{id: 19, 	path: "/static/img/cases/2-21b.jpg", 	position:1, cardId: 21},
-		{id: 20, 	path: "/static/img/cases/2-21c.jpg", 	position:2, cardId: 21},
-		{id: 21, 	path: "/static/img/cases/2-22a.jpg", 	position:0, cardId: 22},
-		{id: 22, 	path: "/static/img/cases/2-22b.jpg", 	position:1, cardId: 22},
-		{id: 23, 	path: "/static/img/cases/2-23.jpg", 	position:0, cardId: 23},
-		{id: 24, 	path: "/static/img/cases/2-24a.jpg", 	position:0, cardId: 24},
-		{id: 25, 	path: "/static/img/cases/2-24b.jpg", 	position:1, cardId: 24},
-		{id: 26, 	path: "/static/img/cases/2-24c.jpg", 	position:2, cardId: 24},
-		{id: 27, 	path: "/static/img/cases/2-24d.jpg", 	position:3, cardId: 24},
-		{id: 28, 	path: "/static/img/cases/2-24e.jpg", 	position:4, cardId: 24},
-		{id: 29, 	path: "/static/img/cases/2-2a.jpg", 	position:0, cardId: 2},
-		{id: 30, 	path: "/static/img/cases/2-2b.jpg", 	position:1, cardId: 2},
-		{id: 31, 	path: "/static/img/cases/2-2c.jpg", 	position:2, cardId: 2},
-		{id: 32, 	path: "/static/img/cases/2-3.jpg", 		position:0, cardId: 3},
-		{id: 33, 	path: "/static/img/cases/2-4.jpg", 		position:0, cardId: 4},
-		{id: 34, 	path: "/static/img/cases/2-5a.jpg", 	position:0, cardId: 5},
-		{id: 35, 	path: "/static/img/cases/2-5b.jpg", 	position:1, cardId: 5},
-		{id: 36, 	path: "/static/img/cases/2-5c.jpg", 	position:2, cardId: 5},
-		{id: 37, 	path: "/static/img/cases/2-6a.jpg", 	position:0, cardId: 6},
-		{id: 38, 	path: "/static/img/cases/2-6b.jpg", 	position:1, cardId: 6},
-		{id: 39, 	path: "/static/img/cases/2-6c.jpg", 	position:2, cardId: 6},
-		{id: 40, 	path: "/static/img/cases/2-6d.jpg", 	position:3, cardId: 6},
-		{id: 41, 	path: "/static/img/cases/2-7a.jpg", 	position:0, cardId: 7},
-		{id: 42, 	path: "/static/img/cases/2-7b.jpg", 	position:1, cardId: 7},
-		{id: 43, 	path: "/static/img/cases/2-7c.jpg", 	position:2, cardId: 7},
-		{id: 44, 	path: "/static/img/cases/2-7d.jpg", 	position:3, cardId: 7},
-		{id: 45, 	path: "/static/img/cases/2-8a.jpg", 	position:0, cardId: 8},
-		{id: 46, 	path: "/static/img/cases/2-8b.jpg", 	position:1, cardId: 8},
-		{id: 47, 	path: "/static/img/cases/2-9a.jpg", 	position:0, cardId: 9},
-		{id: 48, 	path: "/static/img/cases/2-9b.jpg", 	position:1, cardId: 9},
-		{id: 49, 	path: "/static/img/cases/2-9c.jpg", 	position:2, cardId: 9}
-	]	
-};	
+		{id: 1, 	path: "/static/img/cases/2-10.jpg", 	position:0, card_id: 10},
+		{id: 2, 	path: "/static/img/cases/2-11a.jpg", 	position:0, card_id: 11},
+		{id: 3, 	path: "/static/img/cases/2-11b.jpg", 	position:1, card_id: 11},
+		{id: 4, 	path: "/static/img/cases/2-12.jpg", 	position:0, card_id: 12},
+		{id: 5, 	path: "/static/img/cases/2-13.jpg", 	position:0, card_id: 13},
+		{id: 6, 	path: "/static/img/cases/2-14a.jpg", 	position:0, card_id: 14},
+		{id: 7, 	path: "/static/img/cases/2-14b.jpg", 	position:1, card_id: 14},
+		{id: 8, 	path: "/static/img/cases/2-15.jpg", 	position:0, card_id: 15},
+		{id: 9, 	path: "/static/img/cases/2-16.jpg", 	position:0, card_id: 16},
+		{id: 10, 	path: "/static/img/cases/2-17.jpg", 	position:0, card_id: 17},
+		{id: 11, 	path: "/static/img/cases/2-18a.jpg", 	position:0, card_id: 18},
+		{id: 12, 	path: "/static/img/cases/2-18b.jpg", 	position:1, card_id: 18},
+		{id: 13, 	path: "/static/img/cases/2-19.jpg", 	position:0, card_id: 19},
+		{id: 14, 	path: "/static/img/cases/2-1a.jpg", 	position:0, card_id: 1},
+		{id: 15, 	path: "/static/img/cases/2-1b.jpg", 	position:1, card_id: 1},
+		{id: 16, 	path: "/static/img/cases/2-20a.jpg", 	position:0, card_id: 20},
+		{id: 17, 	path: "/static/img/cases/2-20b.jpg", 	position:1, card_id: 20},
+		{id: 18, 	path: "/static/img/cases/2-21a.jpg", 	position:0, card_id: 21},
+		{id: 19, 	path: "/static/img/cases/2-21b.jpg", 	position:1, card_id: 21},
+		{id: 20, 	path: "/static/img/cases/2-21c.jpg", 	position:2, card_id: 21},
+		{id: 21, 	path: "/static/img/cases/2-22a.jpg", 	position:0, card_id: 22},
+		{id: 22, 	path: "/static/img/cases/2-22b.jpg", 	position:1, card_id: 22},
+		{id: 23, 	path: "/static/img/cases/2-23.jpg", 	position:0, card_id: 23},
+		{id: 24, 	path: "/static/img/cases/2-24a.jpg", 	position:0, card_id: 24},
+		{id: 25, 	path: "/static/img/cases/2-24b.jpg", 	position:1, card_id: 24},
+		{id: 26, 	path: "/static/img/cases/2-24c.jpg", 	position:2, card_id: 24},
+		{id: 27, 	path: "/static/img/cases/2-24d.jpg", 	position:3, card_id: 24},
+		{id: 28, 	path: "/static/img/cases/2-24e.jpg", 	position:4, card_id: 24},
+		{id: 29, 	path: "/static/img/cases/2-2a.jpg", 	position:0, card_id: 2},
+		{id: 30, 	path: "/static/img/cases/2-2b.jpg", 	position:1, card_id: 2},
+		{id: 31, 	path: "/static/img/cases/2-2c.jpg", 	position:2, card_id: 2},
+		{id: 32, 	path: "/static/img/cases/2-3.jpg", 		position:0, card_id: 3},
+		{id: 33, 	path: "/static/img/cases/2-4.jpg", 		position:0, card_id: 4},
+		{id: 34, 	path: "/static/img/cases/2-5a.jpg", 	position:0, card_id: 5},
+		{id: 35, 	path: "/static/img/cases/2-5b.jpg", 	position:1, card_id: 5},
+		{id: 36, 	path: "/static/img/cases/2-5c.jpg", 	position:2, card_id: 5},
+		{id: 37, 	path: "/static/img/cases/2-6a.jpg", 	position:0, card_id: 6},
+		{id: 38, 	path: "/static/img/cases/2-6b.jpg", 	position:1, card_id: 6},
+		{id: 39, 	path: "/static/img/cases/2-6c.jpg", 	position:2, card_id: 6},
+		{id: 40, 	path: "/static/img/cases/2-6d.jpg", 	position:3, card_id: 6},
+		{id: 41, 	path: "/static/img/cases/2-7a.jpg", 	position:0, card_id: 7},
+		{id: 42, 	path: "/static/img/cases/2-7b.jpg", 	position:1, card_id: 7},
+		{id: 43, 	path: "/static/img/cases/2-7c.jpg", 	position:2, card_id: 7},
+		{id: 44, 	path: "/static/img/cases/2-7d.jpg", 	position:3, card_id: 7},
+		{id: 45, 	path: "/static/img/cases/2-8a.jpg", 	position:0, card_id: 8},
+		{id: 46, 	path: "/static/img/cases/2-8b.jpg", 	position:1, card_id: 8},
+		{id: 47, 	path: "/static/img/cases/2-9a.jpg", 	position:0, card_id: 9},
+		{id: 48, 	path: "/static/img/cases/2-9b.jpg", 	position:1, card_id: 9},
+		{id: 49, 	path: "/static/img/cases/2-9c.jpg", 	position:2, card_id: 9}
+	]
+};

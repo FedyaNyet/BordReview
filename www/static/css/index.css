@@ -103,6 +103,18 @@ html body #content-wrapper .slide .page.scrollable {
   right: 0px;
   top: 69px;
 }
+html body #content-wrapper .slide .page.scrollable .card-time {
+  position: relative;
+  padding-left: 70px;
+}
+html body #content-wrapper .slide .page.scrollable .card-time img {
+  display: inline-block;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: 60px;
+  width: 60px;
+}
 @media screen and (min-width: 640px) {
   /* @media screen and (min-width: 880px) { */
   .side-nav {

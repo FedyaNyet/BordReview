@@ -18,8 +18,10 @@
     <div class="page scrollable">
         <h3 class="topcoat-list__header">Some List of Features</h3>
         <ul class="topcoat-list">
-            <li ng-repeat="card in cards" class="topcoat-list__item">
-               <span>{{card.id}}) {{card.answer}}</span>
+            <li ng-repeat="card in cards" class="topcoat-list__item card-time">
+                <div>
+                    <img src="{{card.path}}"><span>{{card.id}}) {{card.answer}}</span>
+               </div>
             </li>
         </ul>
     </div>
