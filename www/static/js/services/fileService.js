@@ -25,10 +25,11 @@ myApp.factory('fileService',['$q',function($q){
                 var filename = url.substr(url.lastIndexOf("/")+1);
                 fs.root.getFile("derp.txt", {create: true}, function(file) {
                     var sPath = file.fullPath.replace("derp.txt","");
-                    file.remove(); //remove it so we can use the name
+                    console.log(sPath, file);
+                    // file.remove(); //remove it so we can use the name
                     (new FileTransfer()).download(
                         url,
-                        filename,
+                        sPath + filename,
                         function(theFile) {
                             console.log("download complete: " + theFile.toURI());
                             promise.resolve(theFile.toURI())
