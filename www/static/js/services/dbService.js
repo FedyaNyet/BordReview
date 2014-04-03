@@ -83,7 +83,7 @@ myApp.factory('dbService',['$q',function($q){
 			return runQueryPromise("SELECT * FROM `photo` ORDER BY id",[]);
 	    },
 	    setPhotoPath: function(id, path){
-			return runQueryPromise("UPDATE `photo` SET path=? where p.id=?",[path, id]);
+			return runQueryPromise("UPDATE `photo` SET path=? where id=?",[path, id]);
 	    }
 	};
 }])
