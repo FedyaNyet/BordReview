@@ -5,14 +5,24 @@ myApp.controller('AppController', ['$rootScope', '$location', 'dbService', 'file
 
         dbService.init().then(function(){
             dbService.getPhotos().then(function (results) {
-                for(var i = 0; i < results.rows.length; i++){
-                    var photo = results.rows.item(i);
-                    fileService.checkFileNeedsDownload(photo.path).then(function(){
-                        fileService.downloadFile(photo.url).then(function(path){
-                            dbService.setPhotoPath(photo.id, path);
-                        });
-                    })
-                }
+
+                var photo = results.rows.item(0);
+                fileService.downloadFile(photo.url).then(function(path){
+                    dbService.setPhotoPath(photo.id, path);
+                });
+
+
+                // for(var i = 0; i < results.rows.length; i++){
+                //     var photo = results.rows.item(i);
+                //     if(photo.path === ""){
+                //         fileService.downloadFile(photo.url).then(function(path){
+                //             dbService.setPhotoPath(photo.id, path);
+                //         });
+                //     }
+                //     fileService.checkFileNeedsDownload(photo.path).then(function(){
+                        
+                //     })
+                // }
             });
         });
 

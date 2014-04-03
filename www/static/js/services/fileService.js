@@ -1,86 +1,103 @@
 myApp.factory('fileService',['$q',function($q){
     
-    var storageLimitMB = 50
-    var fileSystem;
-
-    var getFileSystem = function(callback){
-        if (fileSystem){
-            return callback(fileSystem);
-        } 
-        var gotStorage = function(grantedBytes, callback){
-            window.webkitRequestFileSystem(window.PERSISTENT, grantedBytes, function(fs){
-                fileSystem = fs;
-                callback(fileSystem);
-            }, function(e){console.log(e);});
-        }
-
-
-        if(navigator.webkitTemporaryStorage.requestQuota){
-            requested = true;
-            navigator.webkitTemporaryStorage.requestQuota(
-                storageLimitMB*1024*1024,
-                function(size){ console.log('got Chrome storage quota:'+size); gotStorage(size, callback); }, 
-                function(e) { console.log('Error', e); }
-            );
-        }else{
-            gotStorage(storageLimitMB*1024*1024, callback);
-        }     
-    }
-
-    
+    var storageLimitMB = 50;
      
+    
+
+
 
 
 	return {
-		checkFileNeedsDownload: function(path){
+		// checkFileNeedsDownload: function(path){
+  //           var deferred = $q.defer();
+  //           getFileSystem().then(function(fs){
+  //               fs.root.getFile(path,{},
+  //                   function(){
+  //                       //it exists..
+  //                       deferred.reject();
+  //                   },function(er){
+  //                       //it can't be opened...
+  //                       console.log(er);
+  //                       deferred.resolve(path);
+  //                   });
+  //           });
+  //           return deferred.promise;
+		// },
+		downloadFile: function(url){
+
+            console.log(url);
+            var filename = url.substr(url.lastIndexOf("/")+1);
             var deferred = $q.defer();
-            if(path == ""){
-                deferred.resolve();  
+
+            function getFile(url){
+                var deferred = $q.defer();
+                var request;
+                var handler = function(){
+                    deferred.resolve(request.responseText);
+                }
+                if(window.XDomainRequest){
+                    request = new window.XDomainRequest();
+                    request.onload = handler
+                } else{
+                    request = new XMLHttpRequest();
+                    request.onreadystatechange = handler;
+                }
+                request.open('GET', url, true);
+                request.send();
                 return deferred.promise;
             }
-            var reader = new FileReader();
-            reader.onloadend = function(evt) {
-                if(evt.target.result != null){
-                    deferred.reject();  
-                }        
-            };
-            reader.readAsDataURL(path);
-            return deferred.promise;
-		},
-		downloadFile: function(url){
-			var filename = url.substr(url.lastIndexOf("/")+1);
-    		var deferred = $q.defer();
-            getFileSystem(function(fileSystem){
-                fileSystem.root.getFile(
-                    "dummy.html", 
-                    {create: true, exclusive: false}, 
-                    function gotFileEntry(fileEntry){
-
-                        var sPath = fileEntry.fullPath.replace("dummy.html", "");
-                        fileEntry.remove();
-
-                        var fileTransfer = new FileTransfer();
-                        fileTransfer.download(
-                            url,
-                            sPath + filename,
-                            function(theFile) {
-                                deferred.resolve(theFile.toURI());
-                            },
-                            function(error) {
-                                console.log("download error source " + error.source);
-                                console.log("download error target " + error.target);
-                                console.log("upload error code: " + error.code);
-                                deferred.reject();
-                            }
-                        );
-                    }, 
-                    function(evt){ //FAIL
-                        console.log(evt.code + "-" + evt.message);
-                        deferred.reject();
-                    }
-                );
+            getFile(url).then(function(blob){
+                var blob = new Blob([blob],{type:"image/png"});
+                function gotFS(fs) {
+                    fs.root.getFile(filename, {create: true}, function(DatFile) {
+                        DatFile.createWriter(function(DatContent) {
+                            DatContent.write(blob);
+                            deferred.resolve(filename);
+                        });
+                    });
+                }
+                if(navigator.webkitTemporaryStorage.requestQuota){
+                    navigator.webkitPersistentStorage.requestQuota(1024*1024, function() {
+                        window.webkitRequestFileSystem(window.PERSISTENT , 1024*1024, gotFS);
+                    })
+                }else{
+                    window.webkitRequestFileSystem(window.PERSISTENT , 1024*1024, gotFS);
+                }
             });
+
+
+
             return deferred.promise;
+
+            // getFileSystem().then(function(fs){
+            //     fs.root.getFile(
+            //         "dummy.html", 
+            //         {create: true, exclusive: true}, 
+            //         function (fileEntry){
+            //             var sPath = fileEntry.fullPath.replace("dummy.html", "");
+            //             fileEntry.remove();
+
+            //             var fileTransfer = new FileTransfer();
+            //             fileTransfer.download(
+            //                 url,
+            //                 sPath + filename,
+            //                 function(theFile) {
+            //                     deferred.resolve(theFile.toURI());
+            //                 },
+            //                 function(error) {
+            //                     console.log("download error source " + error.source);
+            //                     console.log("download error target " + error.target);
+            //                     console.log("upload error code: " + error.code);
+            //                     deferred.reject();
+            //                 }
+            //             );
+            //         }, 
+            //         function(evt){ //FAIL
+            //             console.log(evt.name + "-" + evt.message);
+            //             deferred.reject();
+            //         }
+            //     );
+            // });
 	    } 
 	}
 }]);
