@@ -30,7 +30,7 @@
     <preference name="permissions"                value="none"/>
  
     <!-- all: current version of PhoneGap -->
-    <preference name="phonegap-version"      value="3.4.0" />   
+    <!-- <preference name="phonegap-version"      value="3.4.0" />    -->
     <!-- all: default means both landscape and portrait are enabled -->
     <preference name="orientation"                value="default" />        
     <!-- all: possible values handset, tablet, or universal -->
