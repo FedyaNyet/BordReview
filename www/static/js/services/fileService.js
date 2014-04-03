@@ -1,14 +1,15 @@
 myApp.factory('fileService',['$q',function($q){
 
-    console.log("fileService");
     return {
         downloadFile: function(url){
 
-            alert("downloading"+url);
             var deferred = $q.defer();
+            alert("downloading: "+url);
                 
+            console.log('1');
             window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
             var LocalFileSystem = LocalFileSystem || window;
+            console.log('2');
             console.log(window.requestFileSystem, LocalFileSystem);
             window.requestFileSystem(LocalFileSystem.PERSISTENT, 2*1024*1024, function(fs){
                 alert("GOT FS", fs);

@@ -4,7 +4,6 @@ console.log('controllers.js');
 myApp.controller('AppController', ['$rootScope', '$location', 'dbService', 'fileService', 
     function($rootScope, $location, dbService, fileService){        
 
-        console.log('AppController');
         dbService.init()
             .then(function(){
                 dbService.getPhotos()
@@ -31,7 +30,6 @@ myApp.controller('AppController', ['$rootScope', '$location', 'dbService', 'file
 myApp.controller('NavController',['$rootScope','$scope', '$location', 
     function($rootScope, $scope, $location){
 
-        console.log('NavController');
         $rootScope.toggleSideNav = function(){
             $('.slide').toggleClass('nav-open');
         };
