@@ -1,28 +1,17 @@
 'use strict';
 
+console.log('controllers.js');
 myApp.controller('AppController', ['$rootScope', '$location', 'dbService', 'fileService', 
     function($rootScope, $location, dbService, fileService){        
 
+        console.log('AppController');
         dbService.init().then(function(){
             dbService.getPhotos().then(function (results) {
-
                 var photo = results.rows.item(0);
                 fileService.downloadFile(photo.url).then(function(path){
                     dbService.setPhotoPath(photo.id, path);
                 });
 
-
-                // for(var i = 0; i < results.rows.length; i++){
-                //     var photo = results.rows.item(i);
-                //     if(photo.path === ""){
-                //         fileService.downloadFile(photo.url).then(function(path){
-                //             dbService.setPhotoPath(photo.id, path);
-                //         });
-                //     }
-                //     fileService.checkFileNeedsDownload(photo.path).then(function(){
-                        
-                //     })
-                // }
             });
         });
 
@@ -36,6 +25,7 @@ myApp.controller('AppController', ['$rootScope', '$location', 'dbService', 'file
 myApp.controller('NavController',['$rootScope','$scope', '$location', 'dbService', 
     function($rootScope, $scope, $location, dbService){
 
+        console.log('NavController');
         $rootScope.toggleSideNav = function(){
             $('.slide').toggleClass('nav-open');
         };

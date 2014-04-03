@@ -2,7 +2,7 @@
 
 myApp.factory('dbService',['$q',function($q){
 
-
+	console.log("dbService");
 	var db;
 	var runQueryPromise = function(query, params){
 		if(!params){

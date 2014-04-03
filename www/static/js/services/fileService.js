@@ -1,21 +1,7 @@
 myApp.factory('fileService',['$q',function($q){
 
+    console.log("fileService");
 	return {
-		// checkFileNeedsDownload: function(path){
-  //           var deferred = $q.defer();
-  //           getFileSystem().then(function(fs){
-  //               fs.root.getFile(path,{},
-  //                   function(){
-  //                       //it exists..
-  //                       deferred.reject();
-  //                   },function(er){
-  //                       //it can't be opened...
-  //                       console.log(er);
-  //                       deferred.resolve(path);
-  //                   });
-  //           });
-  //           return deferred.promise;
-		// },
 		downloadFile: function(url){
 
             console.log(url);
