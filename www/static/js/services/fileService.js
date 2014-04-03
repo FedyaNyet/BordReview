@@ -4,14 +4,14 @@ myApp.factory('fileService',['$q',function($q){
     return {
         downloadFile: function(url){
 
-            console.log(url);
+            alert("downloading"+url);
             var deferred = $q.defer();
             
             window.requestFileSystem(LocalFileSystem.PERSISTENT, 2*1024*1024, function(fs){
-                console.log("GOT FS", fs);
+                alert("GOT FS", fs);
                 fs.root.getFile("derp.txt", {create: true, exclusive: false}, 
                     function(file) {
-                        console.log(file);
+                        alert("fullPath:"+file.fullPath + " name:"+file.name);
                         var sPath = file.fullPath.replace("derp.txt","");
                         // file.remove(); //remove it so we can use the name
                         var filename = url.substr(url.lastIndexOf("/")+1);
