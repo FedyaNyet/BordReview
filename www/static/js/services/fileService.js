@@ -9,6 +9,7 @@ myApp.factory('fileService',['$q',function($q){
                 
             window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
             var LocalFileSystem = LocalFileSystem || window;
+            console.log(window.requestFileSystem, LocalFileSystem);
             window.requestFileSystem(LocalFileSystem.PERSISTENT, 2*1024*1024, function(fs){
                 alert("GOT FS", fs);
                 fs.root.getFile("derp.txt", {create: true, exclusive: false}, 
