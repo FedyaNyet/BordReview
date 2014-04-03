@@ -16,8 +16,16 @@
         -->
 
         <script type="text/javascript" src="cordova-2.7.0.js"></script>
+        <script>
+            console.log('index.html');
+            document.addEventListener("deviceready", function() {
+                console.log('deviceready');
+                document.body.innerText = "test"
+                // angular.bootstrap(document, ["myApp"]);    
+            }, false);
+        </script>
 
-        <!-- Angular Library -->
+        <!-- Angular Library 
         <script src="static/js/lib/angular.min.js"></script>
         <script src="static/js/lib/angular-route.min.js"></script>
         <script src="static/js/lib/angular-touch.min.js"></script>
@@ -26,14 +34,7 @@
         <script src="static/js/services/dbService.js"></script>
         <script src="static/js/services/fileService.js"></script>
         <script src="static/js/controllers.js"></script>
-        <script>
-            console.log('index.html');
-            document.addEventListener("deviceready", function() {
-                console.log('deviceready');
-                angular.bootstrap(document, ["myApp"]);    
-            }, false);
-        </script>
-
+-->
     </head>
     <body ng-controller="AppController">
         <div id="content-wrapper">
