@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:ng="http://angularjs.org" lang="en" ng-app="myApp">
+<html xmlns:ng="http://angularjs.org" lang="en">
     <head>
         <title>NeuroRad</title>
         <meta charset="utf-8" />
@@ -16,11 +16,6 @@
         -->
 
         <script type="text/javascript" src="cordova-2.7.0.js"></script>
-        <script>
-            document.addEventListener("deviceready", function(e){
-                console.log('deviceready');
-            }, false);
-        </script>
 
         <!-- Angular Library -->
         <script src="static/js/lib/angular.min.js"></script>
@@ -28,9 +23,15 @@
         <script src="static/js/lib/angular-touch.min.js"></script>
         <script src="static/js/lib/jquery-1.11.0.min.js"></script>
         <script src="static/js/app.js"></script>
-        <script src="static/js/services.js"></script>
-        <script src="static/js/services-phonegap.js"></script>
+        <script src="static/js/services/dbService.js"></script>
+        <script src="static/js/services/fileService.js"></script>
         <script src="static/js/controllers.js"></script>
+        <script>
+            document.addEventListener("deviceready", function() {
+                console.log('deviceready');
+                angular.bootstrap(document, ["myApp"]);    
+            }, false);
+        </script>
 
     </head>
     <body ng-controller="AppController">

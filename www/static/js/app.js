@@ -2,7 +2,7 @@
 
 // Declare app level module
 var myApp = angular
-    .module('myApp', ['ngRoute', 'ngTouch', 'myApp.services'])
+    .module('myApp', ['ngRoute', 'ngTouch'])
     .config(['$routeProvider', function($routeProvider) {
         $routeProvider.when('/', {templateUrl: 'templates/listView.html', controller: 'ListCtrl'});
         $routeProvider.when('/review', {templateUrl: 'templates/review.html', controller: 'ListCtrl'});

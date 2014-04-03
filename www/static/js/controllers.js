@@ -1,10 +1,29 @@
 'use strict';
 
-myApp.controller('AppController', ['$rootScope', '$location', 'cardsService', 
-    function($rootScope, $location, cardsService){
+myApp.controller('AppController', ['$rootScope', '$location', 'dbService', 'fileService', 
+    function($rootScope, $location, dbService, fileService){        
 
-        cardsService.init().then(function(){
-            console.log('loaded db');
+        dbService.init().then(function(){
+            dbService.getPhotos().then(function (results) {
+
+                var photo = results.rows.item(0);
+                fileService.downloadFile(photo.url).then(function(path){
+                    dbService.setPhotoPath(photo.id, path);
+                });
+
+
+                // for(var i = 0; i < results.rows.length; i++){
+                //     var photo = results.rows.item(i);
+                //     if(photo.path === ""){
+                //         fileService.downloadFile(photo.url).then(function(path){
+                //             dbService.setPhotoPath(photo.id, path);
+                //         });
+                //     }
+                //     fileService.checkFileNeedsDownload(photo.path).then(function(){
+                        
+                //     })
+                // }
+            });
         });
 
         $rootScope.$on('$locationChangeStart', function(event, next, current) { 
@@ -14,8 +33,8 @@ myApp.controller('AppController', ['$rootScope', '$location', 'cardsService',
     }
 ]);
 
-myApp.controller('NavController',['$rootScope','$scope', '$location', 'cardsService', 
-    function($rootScope, $scope, $location, cardsService){
+myApp.controller('NavController',['$rootScope','$scope', '$location', 'dbService', 
+    function($rootScope, $scope, $location, dbService){
 
         $rootScope.toggleSideNav = function(){
             $('.slide').toggleClass('nav-open');
@@ -40,19 +59,21 @@ myApp.controller('NavController',['$rootScope','$scope', '$location', 'cardsServ
     }
 ]);
 
-myApp.controller('ListCtrl',['$scope', 'cardsService', 
-    function ($scope, cardsService) {
+myApp.controller('ListCtrl',['$scope', 'dbService',
+    function ($scope, dbService) {
         
         $scope.cards = [];
-        cardsService.readAll().then(function (results) {
+        dbService.getCards().then(function (results) {
             $scope.cards = [];
             for(var i = 0; i < results.rows.length; i++){
-                $scope.cards.push(results.rows.item(i));
+                var card = results.rows.item(i);
+                $scope.cards.push(card);
             }
         });
 
         $scope.search = function(query){
-            alert(query);
+            $('.topcoat-navigation-bar__title').hide();
+            $()
         }
 
         $scope.getListItemClass = function($index){
