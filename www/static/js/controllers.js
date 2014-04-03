@@ -5,15 +5,17 @@ myApp.controller('AppController', ['$rootScope', '$location', 'dbService', 'file
     function($rootScope, $location, dbService, fileService){        
 
         console.log('AppController');
-        dbService.init().then(function(){
-            // dbService.getPhotos().then(function (results) {
-            //     var photo = results.rows.item(0);
-            //     fileService.downloadFile(photo.url).then(function(path){
-            //         dbService.setPhotoPath(photo.id, path);
-            //     });
+        dbService.init()
+            // .then(function(){
+            //     dbService.getPhotos().then(function (results) {
+            //         var photo = results.rows.item(0);
+            //         fileService.downloadFile(photo.url).then(function(path){
+            //             dbService.setPhotoPath(photo.id, path);
+            //         });
 
-            // });
-        });
+            //     });
+            // })
+        ;
 
         $rootScope.$on('$locationChangeStart', function(event, next, current) { 
             console.log(current, ' -> ',next);
@@ -22,8 +24,8 @@ myApp.controller('AppController', ['$rootScope', '$location', 'dbService', 'file
     }
 ]);
 
-myApp.controller('NavController',['$rootScope','$scope', '$location', 'dbService', 
-    function($rootScope, $scope, $location, dbService){
+myApp.controller('NavController',['$rootScope','$scope', '$location', 
+    function($rootScope, $scope, $location){
 
         console.log('NavController');
         $rootScope.toggleSideNav = function(){
@@ -53,17 +55,16 @@ myApp.controller('ListCtrl',['$scope', 'dbService',
     function ($scope, dbService) {
         
         $scope.cards = [];
-        dbService.getCards().then(function (results) {
-            $scope.cards = [];
-            for(var i = 0; i < results.rows.length; i++){
-                var card = results.rows.item(i);
-                $scope.cards.push(card);
-            }
-        });
+        // dbService.getCards().then(function (results) {
+        //     $scope.cards = [];
+        //     for(var i = 0; i < results.rows.length; i++){
+        //         var card = results.rows.item(i);
+        //         $scope.cards.push(card);
+        //     }
+        // });
 
         $scope.search = function(query){
             $('.topcoat-navigation-bar__title').hide();
-            $()
         }
 
         $scope.getListItemClass = function($index){

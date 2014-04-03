@@ -32,49 +32,50 @@ myApp.factory('dbService',['$q',function($q){
 
 	return {
 		init:function(){
-			db = openDatabase('NeuroRad', '1.0', 'NeuroRad', 2 * 1024 * 1024);
-			var deferred = $q.defer();
-			if(isFirstRun()){
-				if(!window.localStorage.getItem('card')){
-					runQueryPromise('CREATE TABLE IF NOT EXISTS `card` (`id` int(11) NOT NULL, `question` varchar(255), `answer` varchar(255), `status` int(2), PRIMARY KEY (`id`));').then(
-						function(){
-							window.localStorage.setItem('cards','created');
-							for(var idx in fixture.cards){
-								var card = fixture.cards[idx];
-								runQueryPromise('INSERT INTO `card` (`id`, `question`, `answer`, `status`) VALUES (?,?,?,?);',[card.id, card.question, card.answer, card.status]);
-							}
-							if(!isFirstRun()){
-								//both tables have been made
-								deferred.resolve();
-							}
-						},
-						function(){
-                    		deferred.reject(); 
-						}
-					);
-				}
-				if(!window.localStorage.getItem('photoes')){
-					runQueryPromise('CREATE TABLE IF NOT EXISTS `photo` (`id` int(11) NOT NULL, `url` varchar(100), `path` varchar(50), `position` int(5),`card_id` int(11) NOT NULL, PRIMARY KEY (`id`));').then(
-						function(){
-							window.localStorage.setItem('photoes','created');
-							for(var idx in fixture.photos){
-								var photo = fixture.photos[idx];
-								runQueryPromise('INSERT INTO `photo` (`id`, `url`, `path`, `position`, `card_id`) VALUES (?,?,?,?,?);',[photo.id, photo.url, photo.path, photo.position, photo.card_id]);
-							}
-							if(!isFirstRun()){
-								//both tables have been made
-								deferred.resolve();
-							}
-						},
-						function(){
-                    		deferred.reject(); 
-						}
-					);
-				}
-			}else{
-				deferred.resolve();
-			}
-            return deferred.promise;
+			console.log("db init");
+			// db = openDatabase('NeuroRad', '1.0', 'NeuroRad', 2 * 1024 * 1024);
+			// var deferred = $q.defer();
+			// if(isFirstRun()){
+			// 	if(!window.localStorage.getItem('card')){
+			// 		runQueryPromise('CREATE TABLE IF NOT EXISTS `card` (`id` int(11) NOT NULL, `question` varchar(255), `answer` varchar(255), `status` int(2), PRIMARY KEY (`id`));').then(
+			// 			function(){
+			// 				window.localStorage.setItem('cards','created');
+			// 				for(var idx in fixture.cards){
+			// 					var card = fixture.cards[idx];
+			// 					runQueryPromise('INSERT INTO `card` (`id`, `question`, `answer`, `status`) VALUES (?,?,?,?);',[card.id, card.question, card.answer, card.status]);
+			// 				}
+			// 				if(!isFirstRun()){
+			// 					//both tables have been made
+			// 					deferred.resolve();
+			// 				}
+			// 			},
+			// 			function(){
+   //                  		deferred.reject(); 
+			// 			}
+			// 		);
+			// 	}
+			// 	if(!window.localStorage.getItem('photoes')){
+			// 		runQueryPromise('CREATE TABLE IF NOT EXISTS `photo` (`id` int(11) NOT NULL, `url` varchar(100), `path` varchar(50), `position` int(5),`card_id` int(11) NOT NULL, PRIMARY KEY (`id`));').then(
+			// 			function(){
+			// 				window.localStorage.setItem('photoes','created');
+			// 				for(var idx in fixture.photos){
+			// 					var photo = fixture.photos[idx];
+			// 					runQueryPromise('INSERT INTO `photo` (`id`, `url`, `path`, `position`, `card_id`) VALUES (?,?,?,?,?);',[photo.id, photo.url, photo.path, photo.position, photo.card_id]);
+			// 				}
+			// 				if(!isFirstRun()){
+			// 					//both tables have been made
+			// 					deferred.resolve();
+			// 				}
+			// 			},
+			// 			function(){
+   //                  		deferred.reject(); 
+			// 			}
+			// 		);
+			// 	}
+			// }else{
+			// 	deferred.resolve();
+			// }
+   //          return deferred.promise;
 		},
 		getCards:function(){
 			return runQueryPromise("SELECT c.id, answer, p.url, p.path FROM `card` as c JOIN `photo` as p on p.card_id = c.id where p.position = 0 ORDER BY c.id",[]);
