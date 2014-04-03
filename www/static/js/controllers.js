@@ -55,13 +55,13 @@ myApp.controller('ListCtrl',['$scope', 'dbService',
     function ($scope, dbService) {
         
         $scope.cards = [];
-        // dbService.getCards().then(function (results) {
-        //     $scope.cards = [];
-        //     for(var i = 0; i < results.rows.length; i++){
-        //         var card = results.rows.item(i);
-        //         $scope.cards.push(card);
-        //     }
-        // });
+        dbService.getCards().then(function (results) {
+            $scope.cards = [];
+            for(var i = 0; i < results.rows.length; i++){
+                var card = results.rows.item(i);
+                $scope.cards.push(card);
+            }
+        });
 
         $scope.search = function(query){
             $('.topcoat-navigation-bar__title').hide();

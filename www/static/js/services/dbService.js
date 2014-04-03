@@ -9,21 +9,21 @@ myApp.factory('dbService',['$q',function($q){
 			params = [];
 		} 
 		var deferred = $q.defer();
-        db.transaction(function(tx) {
-        	tx.executeSql(query, params,
-        		function(tx, rs){
-                    deferred.resolve(rs); 
-            	},
-            	function(tx, error){
+		db.transaction(function(tx) {
+			tx.executeSql(query, params,
+				function(tx, rs){
+					deferred.resolve(rs); 
+				},
+				function(tx, error){
 					console.log(error.code + " - " + error.message);
-                    deferred.reject(error); 
-                }
-            );
-        }, function(){ 
-        	//transaction Error
-            deferred.reject(); 
+					deferred.reject(error); 
+				}
+			);
+		}, function(){ 
+			//transaction Error
+			deferred.reject(); 
 		});
-        return deferred.promise;
+		return deferred.promise;
 	}
 
 	var isFirstRun = function(){
@@ -33,59 +33,59 @@ myApp.factory('dbService',['$q',function($q){
 	return {
 		init:function(){
 			console.log("db init");
-			// db = openDatabase('NeuroRad', '1.0', 'NeuroRad', 2 * 1024 * 1024);
-			// var deferred = $q.defer();
-			// if(isFirstRun()){
-			// 	if(!window.localStorage.getItem('card')){
-			// 		runQueryPromise('CREATE TABLE IF NOT EXISTS `card` (`id` int(11) NOT NULL, `question` varchar(255), `answer` varchar(255), `status` int(2), PRIMARY KEY (`id`));').then(
-			// 			function(){
-			// 				window.localStorage.setItem('cards','created');
-			// 				for(var idx in fixture.cards){
-			// 					var card = fixture.cards[idx];
-			// 					runQueryPromise('INSERT INTO `card` (`id`, `question`, `answer`, `status`) VALUES (?,?,?,?);',[card.id, card.question, card.answer, card.status]);
-			// 				}
-			// 				if(!isFirstRun()){
-			// 					//both tables have been made
-			// 					deferred.resolve();
-			// 				}
-			// 			},
-			// 			function(){
-   //                  		deferred.reject(); 
-			// 			}
-			// 		);
-			// 	}
-			// 	if(!window.localStorage.getItem('photoes')){
-			// 		runQueryPromise('CREATE TABLE IF NOT EXISTS `photo` (`id` int(11) NOT NULL, `url` varchar(100), `path` varchar(50), `position` int(5),`card_id` int(11) NOT NULL, PRIMARY KEY (`id`));').then(
-			// 			function(){
-			// 				window.localStorage.setItem('photoes','created');
-			// 				for(var idx in fixture.photos){
-			// 					var photo = fixture.photos[idx];
-			// 					runQueryPromise('INSERT INTO `photo` (`id`, `url`, `path`, `position`, `card_id`) VALUES (?,?,?,?,?);',[photo.id, photo.url, photo.path, photo.position, photo.card_id]);
-			// 				}
-			// 				if(!isFirstRun()){
-			// 					//both tables have been made
-			// 					deferred.resolve();
-			// 				}
-			// 			},
-			// 			function(){
-   //                  		deferred.reject(); 
-			// 			}
-			// 		);
-			// 	}
-			// }else{
-			// 	deferred.resolve();
-			// }
-   //          return deferred.promise;
+			db = openDatabase('NeuroRad', '1.0', 'NeuroRad', 2 * 1024 * 1024);
+			var deferred = $q.defer();
+			if(isFirstRun()){
+				if(!window.localStorage.getItem('card')){
+					runQueryPromise('CREATE TABLE IF NOT EXISTS `card` (`id` int(11) NOT NULL, `question` varchar(255), `answer` varchar(255), `status` int(2), PRIMARY KEY (`id`));').then(
+						function(){
+							window.localStorage.setItem('cards','created');
+							for(var idx in fixture.cards){
+								var card = fixture.cards[idx];
+								runQueryPromise('INSERT INTO `card` (`id`, `question`, `answer`, `status`) VALUES (?,?,?,?);',[card.id, card.question, card.answer, card.status]);
+							}
+							if(!isFirstRun()){
+								//both tables have been made
+								deferred.resolve();
+							}
+						},
+						function(){
+							deferred.reject(); 
+						}
+					);
+				}
+				if(!window.localStorage.getItem('photoes')){
+					runQueryPromise('CREATE TABLE IF NOT EXISTS `photo` (`id` int(11) NOT NULL, `url` varchar(100), `path` varchar(50), `position` int(5),`card_id` int(11) NOT NULL, PRIMARY KEY (`id`));').then(
+						function(){
+							window.localStorage.setItem('photoes','created');
+							for(var idx in fixture.photos){
+								var photo = fixture.photos[idx];
+								runQueryPromise('INSERT INTO `photo` (`id`, `url`, `path`, `position`, `card_id`) VALUES (?,?,?,?,?);',[photo.id, photo.url, photo.path, photo.position, photo.card_id]);
+							}
+							if(!isFirstRun()){
+								//both tables have been made
+								deferred.resolve();
+							}
+						},
+						function(){
+							deferred.reject(); 
+						}
+					);
+				}
+			}else{
+				deferred.resolve();
+			}
+			return deferred.promise;
 		},
 		getCards:function(){
 			return runQueryPromise("SELECT c.id, answer, p.url, p.path FROM `card` as c JOIN `photo` as p on p.card_id = c.id where p.position = 0 ORDER BY c.id",[]);
-	    },
-	    getPhotos: function(){
+		},
+		getPhotos: function(){
 			return runQueryPromise("SELECT * FROM `photo` ORDER BY id",[]);
-	    },
-	    setPhotoPath: function(id, path){
+		},
+		setPhotoPath: function(id, path){
 			return runQueryPromise("UPDATE `photo` SET path=? where id=?",[path, id]);
-	    }
+		}
 	};
 }])
 
@@ -152,14 +152,14 @@ var fixture = {
 		},
 		{	id: 13, 
 			question:'25 year old male status post MVC with neurologic symptoms',
-		  	answer:'Traumatic cervical nerve root avulsion with pseudomeningocele', 	
-		  	status: 0
+			answer:'Traumatic cervical nerve root avulsion with pseudomeningocele', 	
+			status: 0
 		},
 		{	id: 14, 
 			question:'55 year old male with neck pain and neurologic symptoms worse in flexion.',
-		 	answer:'Old type II odontoid fracture with atlanto-axial subluxation', 	
-		 	status: 0
-	 	},
+			answer:'Old type II odontoid fracture with atlanto-axial subluxation', 	
+			status: 0
+		},
 		{	id: 15, 
 			question:'20 year old with loss of vision in right eye.  History of spinal cord lesion.',  
 			answer:'Right Optic Nerve Glioma', 	
