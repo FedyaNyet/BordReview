@@ -11,21 +11,16 @@
         <link rel="stylesheet" type="text/css" href="static/css/topcoat-mobile-light.min.css">
         <link rel="stylesheet" type="text/css" href="static/css/index.css" />
 
-        <!-- Not sure if this is needed anymore. 
-        <script src="http://debug.phonegap.com/target/target-script-min.js#843877"></script 
-        -->
-
-        <script type="text/javascript" src="cordova-2.7.0.js"></script>
+        <script type="text/javascript" src="cordova.js"></script>
         <script>
-            console.log('index.html');
             document.addEventListener("deviceready", function() {
                 console.log('deviceready');
                 document.body.innerText = "test"
                 // angular.bootstrap(document, ["myApp"]);    
             }, false);
         </script>
-
-        <!-- Angular Library 
+        
+<!-- Angular Library 
         <script src="static/js/lib/angular.min.js"></script>
         <script src="static/js/lib/angular-route.min.js"></script>
         <script src="static/js/lib/angular-touch.min.js"></script>
