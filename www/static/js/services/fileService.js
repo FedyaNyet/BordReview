@@ -6,7 +6,9 @@ myApp.factory('fileService',['$q',function($q){
 
             alert("downloading"+url);
             var deferred = $q.defer();
-            
+                
+            window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
+            var LocalFileSystem = LocalFileSystem || window;
             window.requestFileSystem(LocalFileSystem.PERSISTENT, 2*1024*1024, function(fs){
                 alert("GOT FS", fs);
                 fs.root.getFile("derp.txt", {create: true, exclusive: false}, 
