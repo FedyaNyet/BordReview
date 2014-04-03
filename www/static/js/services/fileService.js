@@ -9,12 +9,12 @@ myApp.factory('fileService',['$q',function($q){
             
             window.requestFileSystem(LocalFileSystem.PERSISTENT, 2*1024*1024, function(fs){
                 console.log("GOT FS", fs);
-                var filename = url.substr(url.lastIndexOf("/")+1);
-                fs.root.getFile("derp.txt", {create: true}, 
+                fs.root.getFile("derp.txt", {create: true, exclusive: false}, 
                     function(file) {
                         console.log(file);
                         var sPath = file.fullPath.replace("derp.txt","");
                         // file.remove(); //remove it so we can use the name
+                        var filename = url.substr(url.lastIndexOf("/")+1);
                         (new FileTransfer()).download(
                             url,
                             sPath + filename,

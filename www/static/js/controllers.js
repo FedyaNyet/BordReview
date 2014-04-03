@@ -7,13 +7,17 @@ myApp.controller('AppController', ['$rootScope', '$location', 'dbService', 'file
         console.log('AppController');
         dbService.init()
             .then(function(){
-                dbService.getPhotos().then(function (results) {
-                    var photo = results.rows.item(0);
-                    fileService.downloadFile(photo.url).then(function(path){
-                        dbService.setPhotoPath(photo.id, path);
-                    });
-
-                });
+                dbService.getPhotos()
+                    .then(function (results) {
+                        var photo = results.rows.item(0);
+                        console.log(photo);
+                        fileService.downloadFile(photo.url)
+                            .then(function(path){
+                                dbService.setPhotoPath(photo.id, path);
+                            })
+                        ;
+                    })
+                ;
             })
         ;
 
