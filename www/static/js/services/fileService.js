@@ -7,11 +7,12 @@ myApp.factory('fileService',['$q',function($q){
             console.log(url);
             var deferred = $q.defer();
             
-            window.webkitRequestFileSystem(window.PERSISTENT , 2*1024*1024, function(fs){
+            window.requestFileSystem(LocalFileSystem.PERSISTENT, 2*1024*1024, function(fs){
+                console.log("GOT FS", fs);
                 var filename = url.substr(url.lastIndexOf("/")+1);
                 fs.root.getFile("derp.txt", {create: true}, function(file) {
+                    console.log(file);
                     var sPath = file.fullPath.replace("derp.txt","");
-                    console.log(sPath, file);
                     // file.remove(); //remove it so we can use the name
                     (new FileTransfer()).download(
                         url,
