@@ -1,10 +1,8 @@
 'use strict';
 
-console.log('app.js');
-
 // Declare app level module
 var myApp = angular
-    .module('myApp', [function(){console.log('myApp');},'ngRoute', 'ngTouch'])
+    .module('myApp', ['ngRoute', 'ngTouch'])
     .config(['$routeProvider', function($routeProvider) {
         $routeProvider.when('/', {templateUrl: 'templates/listView.html', controller: 'ListCtrl'});
         $routeProvider.when('/review', {templateUrl: 'templates/review.html', controller: 'ListCtrl'});

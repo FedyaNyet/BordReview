@@ -3,16 +3,47 @@
 myApp.controller('AppController', ['$rootScope', '$location', 'dbService', 'fileService', 
     function($rootScope, $location, dbService, fileService){        
 
+ 
         dbService.init().then(function(){
+            var downloadedFiles = 0;
+            var neededDownloads = 0;
+            var downloadErrors = 0;
+            var refresh_cards = function(){
+                if(neededDownloads === (downloadedFiles + downloadErrors)){
+                    refresh_cards_list();
+                }
+            };
             dbService.getEmptyPhotos().then(function (results) {
-                for(var i = 0; i< results.rows.length; i++){
+                neededDownloads = results.rows.length;
+                for(var i = 0; i < results.rows.length; i++){
                     var photo = results.rows.item(i);
                     fileService.downloadFile(photo.url).then(function(path){
-                        dbService.setPhotoPath(photo.id, path);
+                        dbService.setPhotoPath(photo.id, path).then(function(){
+                            downloadedFiles++;
+                            refresh_cards();
+                        });
+                    },function(){
+                        downloadErrors++;
+                        refresh_cards();
                     });
                 }
             });
-        });
+        });       
+
+        $rootScope.cards = [];
+
+        $rootScope.refresh_cards_list = function(){
+            console.log('refreshing cards');
+            dbService.getCards().then(function (results) {
+                var cards = [];
+                for(var i = 0; i < results.rows.length; i++){
+                    cards[i] = results.rows.item(i);
+                }
+                $rootScope.cards = cards;
+            });
+        }
+        $rootScope.refresh_cards_list();
+
 
         $rootScope.$on('$locationChangeStart', function(event, next, current) { 
             $rootScope.hideNav();
@@ -46,17 +77,9 @@ myApp.controller('NavController',['$rootScope','$scope', '$location',
     }
 ]);
 
-myApp.controller('ListCtrl',['$scope', 'dbService',
+myApp.controller('ListCtrl',["$rootScope",'$scope', 'dbService',
     function ($scope, dbService) {
         
-        $scope.cards = [];
-        dbService.getCards().then(function (results) {
-            $scope.cards = [];
-            for(var i = 0; i < results.rows.length; i++){
-                var card = results.rows.item(i);
-                $scope.cards.push(card);
-            }
-        });
 
         $scope.search = function(query){
             $('.topcoat-navigation-bar__title').hide();
