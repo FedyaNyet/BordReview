@@ -16,10 +16,13 @@ myApp.controller('AppController', ['$rootScope', '$location', 'dbService', 'file
             };
             dbService.getEmptyPhotos().then(function (results) {
                 neededDownloads = results.rows.length;
+                var photo_url_id_map = {};
                 for(var i = 0; i < results.rows.length; i++){
                     var photo = results.rows.item(i);
-                    fileService.downloadFile(photo.url).then(function(path){
-                        dbService.setPhotoPath(photo.id, path).then(function(){
+                    photo_url_id_map[photo.url] = photo.id;
+                    fileService.downloadFile(photo.url).then(function(path, url){
+                        photoId = photo_url_id_map[url];
+                        dbService.setPhotoPath(photoId, path).then(function(){
                             downloadedFiles++;
                             refresh_cards();
                         });
