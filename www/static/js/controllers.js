@@ -15,37 +15,39 @@ myApp.controller('AppController', ['$rootScope', '$location', 'dbService', 'file
                 }
                 $rootScope.cards = cards;
             });
-        }
-
+        };
+        
 
         dbService.init().then(function(){
-            var downloadedFiles = 0;
-            var neededDownloads = 0;
-            var downloadErrors = 0;
-            var refresh_cards = function(){
-                console.log(neededDownloads, downloadedFiles, downloadErrors);
-                if(neededDownloads === (downloadedFiles + downloadErrors)){
-                    $rootScope.refresh_cards_list();
-                }
-            };
             dbService.getEmptyPhotos().then(function (results) {
-                neededDownloads = results.rows.length;
-                var photo_url_id_map = {};
+                var PhotoHandler = function(){
+                    var neededDownloads = results.rows.length;
+                    var downloadedFiles = 0;
+                    var downloadErrors = 0;
+                    return {
+                        refresh_cards: function(){
+                            console.log(neededDownloads, downloadedFiles, downloadErrors);
+                            if(neededDownloads === (downloadedFiles + downloadErrors)){
+                                $rootScope.refresh_cards_list();
+                            }
+                        },
+                        downloadPhoto: function(photo){
+                            fileService.downloadFile(photo.url).then(function(path){
+                                console.log(photo.id, url, path);
+                                dbService.setPhotoPath(photo.id, path).then(function(){
+                                    downloadedFiles++;
+                                    PhotoHandler.refresh_cards();
+                                });
+                            },function(){
+                                downloadErrors++;
+                                PhotoHandler.refresh_cards();
+                            });
+                        }
+                    };
+                }();
                 for(var i = 0; i < results.rows.length; i++){
                     var photo = results.rows.item(i);
-                    photo_url_id_map[photo.url] = photo.id;
-                    fileService.downloadFile(photo.url).then(function(path, url){
-                        console.log('downloaded: '+ path, photo_url_id_map);
-                        var photoId = photo_url_id_map[url];
-                        console.log(photoId, url, path);
-                        dbService.setPhotoPath(photoId, path).then(function(){
-                            downloadedFiles++;
-                            refresh_cards();
-                        });
-                    },function(){
-                        downloadErrors++;
-                        refresh_cards();
-                    });
+                    PhotoHandler.downloadPhoto(photo);
                 }
             });
         });       
