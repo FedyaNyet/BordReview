@@ -10,16 +10,15 @@ myApp.factory('fileService',['$q',function($q){
             window.requestFileSystem(LocalFileSystem.PERSISTENT, 2*1024*1024, function(fs){
                 fs.root.getFile("derp.txt", {create: true, exclusive: false}, 
                     function(file) {
-                        var sPath = file.toURL().replace(file.name,"");
-                        // file.remove(); //remove it so we can use the name
                         var filename = url.substr(url.lastIndexOf("/")+1);
-                        alert(url + "  " + sPath + filename);
+                        var path = file.toURL().replace(file.name,"");
+                        file.remove(); //remove it so we can use the name
                         (new FileTransfer()).download(
                             encodeURI(url),
-                            sPath + filename,
+                            path + filename,
                             function(theFile) {
-                                console.log("download complete: " + theFile.toURI());
-                                promise.resolve(theFile.toURI())
+                                console.log("download complete: " + theFile.toURL());
+                                promise.resolve(theFile.toURL())
                             },
                             function(error) {
                                 console.log("download error source " + error.source);
