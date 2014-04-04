@@ -4,7 +4,7 @@ myApp.factory('fileService',['$q',function($q){
         downloadFile: function(url){
 
             var deferred = $q.defer();
-                
+        
             var LocalFileSystem = LocalFileSystem || window;
             window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
             window.requestFileSystem(LocalFileSystem.PERSISTENT, 2*1024*1024, function(fs){
@@ -18,7 +18,8 @@ myApp.factory('fileService',['$q',function($q){
                             encodeURI(url),
                             path + filename,
                             function(theFile) {
-                                deferred.resolve(theFile.toURL(), url);
+                                console.log('file downloaded')
+                                deferred.resolve(theFile.toURL());
                             },
                             function(error) {
                                 console.log("download error source " + error.source);

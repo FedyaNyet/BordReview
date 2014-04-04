@@ -37,6 +37,7 @@ myApp.controller('AppController', ['$rootScope', '$location', 'dbService', 'file
                         fileService.downloadFile(photo.url).then(function(path){
                             console.log(photo.id, url, path);
                             dbService.setPhotoPath(photo.id, path).then(function(){
+                                console.log("updated Photo Path");
                                 PhotoHandler.downloadedFiles++;
                                 PhotoHandler.refresh_cards();
                             });
