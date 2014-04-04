@@ -35,7 +35,7 @@ myApp.controller('AppController', ['$rootScope', '$location', 'dbService', 'file
                     downloadPhoto: function(photo){
                         console.log("downloadPhoto");
                         fileService.downloadFile(photo.url).then(function(path){
-                            console.log(photo.id, url, path);
+                            console.log(photo.id, photo.url, path);
                             dbService.setPhotoPath(photo.id, path).then(function(){
                                 console.log("updated Photo Path");
                                 PhotoHandler.downloadedFiles++;
