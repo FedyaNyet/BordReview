@@ -10,12 +10,12 @@ myApp.factory('fileService',['$q',function($q){
             window.requestFileSystem(LocalFileSystem.PERSISTENT, 2*1024*1024, function(fs){
                 fs.root.getFile("derp.txt", {create: true, exclusive: false}, 
                     function(file) {
-                        var sPath = file.fullPath.replace(file.name,"");
+                        var sPath = file.toURL().replace(file.name,"");
                         // file.remove(); //remove it so we can use the name
                         var filename = url.substr(url.lastIndexOf("/")+1);
                         alert(url + "  " + sPath + filename);
                         (new FileTransfer()).download(
-                            url,
+                            encodeURI(url),
                             sPath + filename,
                             function(theFile) {
                                 console.log("download complete: " + theFile.toURI());
