@@ -9,6 +9,7 @@ myApp.controller('AppController', ['$rootScope', '$location', 'dbService', 'file
             var neededDownloads = 0;
             var downloadErrors = 0;
             var refresh_cards = function(){
+                console.log(neededDownloads, downloadedFiles, downloadErrors);
                 if(neededDownloads === (downloadedFiles + downloadErrors)){
                     refresh_cards_list();
                 }
