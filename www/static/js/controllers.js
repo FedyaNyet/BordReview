@@ -4,24 +4,18 @@ console.log('controllers.js');
 myApp.controller('AppController', ['$rootScope', '$location', 'dbService', 'fileService', 
     function($rootScope, $location, dbService, fileService){        
 
-        dbService.init()
-            .then(function(){
-                dbService.getPhotos()
-                    .then(function (results) {
-                        var photo = results.rows.item(0);
-                        console.log(photo);
-                        fileService.downloadFile(photo.url)
-                            .then(function(path){
-                                dbService.setPhotoPath(photo.id, path);
-                            })
-                        ;
-                    })
-                ;
-            })
-        ;
+        dbService.init().then(function(){
+            dbService.getEmptyPhotos().then(function (results) {
+                for(var i = 0; i< results.rows.length){
+                    var photo = results.rows.item(i);
+                    fileService.downloadFile(photo.url).then(function(path){
+                        dbService.setPhotoPath(photo.id, path);
+                    });
+                }
+            });
+        });
 
         $rootScope.$on('$locationChangeStart', function(event, next, current) { 
-            console.log(current, ' -> ',next);
             $rootScope.hideNav();
         });
     }

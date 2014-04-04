@@ -79,8 +79,8 @@ myApp.factory('dbService',['$q',function($q){
         getCards:function(){
             return runQueryPromise("SELECT c.id, answer, p.url, p.path FROM `card` as c JOIN `photo` as p on p.card_id = c.id where p.position = 0 ORDER BY c.id",[]);
         },
-        getPhotos: function(){
-            return runQueryPromise("SELECT * FROM `photo` ORDER BY id",[]);
+        getEmptyPhotos: function(){
+            return runQueryPromise("SELECT * FROM `photo` Where path="" ORDER BY id",[]);
         },
         setPhotoPath: function(id, path){
             return runQueryPromise("UPDATE `photo` SET path=? where id=?",[path, id]);
