@@ -21,7 +21,9 @@ myApp.controller('AppController', ['$rootScope', '$location', 'dbService', 'file
                     var photo = results.rows.item(i);
                     photo_url_id_map[photo.url] = photo.id;
                     fileService.downloadFile(photo.url).then(function(path, url){
+                        console.log('downloaded: '+ path);
                         photoId = photo_url_id_map[url];
+                        console.log(photoId, url, path);
                         dbService.setPhotoPath(photoId, path).then(function(){
                             downloadedFiles++;
                             refresh_cards();
