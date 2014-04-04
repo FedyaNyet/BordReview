@@ -18,33 +18,34 @@ myApp.controller('AppController', ['$rootScope', '$location', 'dbService', 'file
         };
         
 
+        
+
         dbService.init().then(function(){
             dbService.getEmptyPhotos().then(function (results) {
-                var PhotoHandler = function(){
-                    var neededDownloads = results.rows.length;
-                    var downloadedFiles = 0;
-                    var downloadErrors = 0;
-                    return {
-                        refresh_cards: function(){
-                            console.log(neededDownloads, downloadedFiles, downloadErrors);
-                            if(neededDownloads === (downloadedFiles + downloadErrors)){
-                                $rootScope.refresh_cards_list();
-                            }
-                        },
-                        downloadPhoto: function(photo){
-                            fileService.downloadFile(photo.url).then(function(path){
-                                console.log(photo.id, url, path);
-                                dbService.setPhotoPath(photo.id, path).then(function(){
-                                    downloadedFiles++;
-                                    PhotoHandler.refresh_cards();
-                                });
-                            },function(){
-                                downloadErrors++;
+                var PhotoHandler = {
+                    neededDownloads: results.rows.length,
+                    downloadedFiles: 0,
+                    downloadErrors: 0,
+                    refresh_cards: function(){
+                        console.log(PhotoHandler.neededDownloads, PhotoHandler.downloadedFiles, PhotoHandler.downloadErrors);
+                        if(PhotoHandler.neededDownloads === (PhotoHandler.downloadedFiles + PhotoHandler.downloadErrors)){
+                            $rootScope.refresh_cards_list();
+                        }
+                    },
+                    downloadPhoto: function(photo){
+                        console.log("downloadPhoto");
+                        fileService.downloadFile(photo.url).then(function(path){
+                            console.log(photo.id, url, path);
+                            dbService.setPhotoPath(photo.id, path).then(function(){
+                                PhotoHandler.downloadedFiles++;
                                 PhotoHandler.refresh_cards();
                             });
-                        }
-                    };
-                }();
+                        },function(){
+                            PhotoHandler.downloadErrors++;
+                            PhotoHandler.refresh_cards();
+                        });
+                    }
+                };
                 for(var i = 0; i < results.rows.length; i++){
                     var photo = results.rows.item(i);
                     PhotoHandler.downloadPhoto(photo);
