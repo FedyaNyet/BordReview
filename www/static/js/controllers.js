@@ -1,12 +1,11 @@
 'use strict';
 
-console.log('controllers.js');
 myApp.controller('AppController', ['$rootScope', '$location', 'dbService', 'fileService', 
     function($rootScope, $location, dbService, fileService){        
 
         dbService.init().then(function(){
             dbService.getEmptyPhotos().then(function (results) {
-                for(var i = 0; i< results.rows.length){
+                for(var i = 0; i< results.rows.length; i++){
                     var photo = results.rows.item(i);
                     fileService.downloadFile(photo.url).then(function(path){
                         dbService.setPhotoPath(photo.id, path);
