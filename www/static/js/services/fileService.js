@@ -5,18 +5,15 @@ myApp.factory('fileService',['$q',function($q){
 
             var deferred = $q.defer();
                 
-            console.log('1');
-            window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
             var LocalFileSystem = LocalFileSystem || window;
-            console.log('2');
-            console.log(window.requestFileSystem, LocalFileSystem);
+            window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
             window.requestFileSystem(LocalFileSystem.PERSISTENT, 2*1024*1024, function(fs){
                 fs.root.getFile("derp.txt", {create: true, exclusive: false}, 
                     function(file) {
-                        alert("fullPath:"+file.fullPath + " name:"+file.name);
-                        var sPath = file.fullPath.replace("derp.txt","");
+                        var sPath = file.fullPath.replace(file.name,"");
                         // file.remove(); //remove it so we can use the name
                         var filename = url.substr(url.lastIndexOf("/")+1);
+                        alert(url + "  " + sPath + filename);
                         (new FileTransfer()).download(
                             url,
                             sPath + filename,
@@ -27,7 +24,7 @@ myApp.factory('fileService',['$q',function($q){
                             function(error) {
                                 console.log("download error source " + error.source);
                                 console.log("download error target " + error.target);
-                                console.log("upload error code: " + error.code);
+                                console.log("download error code: " + error.code);
                             }
                         );
                     }, function(){
