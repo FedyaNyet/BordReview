@@ -20,7 +20,7 @@
         <ul class="topcoat-list">
             <li ng-repeat="card in cards" class="topcoat-list__item card-time">
                 <div>
-                    <img src="{{card.path}}"><span>{{card.id}}) {{card.answer}}</span>
+                    <ng-include src="templates/list-item.html" ></ng-include>
                </div>
             </li>
         </ul>

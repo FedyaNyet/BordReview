@@ -4,6 +4,20 @@ myApp.controller('AppController', ['$rootScope', '$location', 'dbService', 'file
     function($rootScope, $location, dbService, fileService){        
 
  
+        $rootScope.cards = [];
+
+        $rootScope.refresh_cards_list = function(){
+            console.log('refreshing cards');
+            dbService.getCards().then(function (results) {
+                var cards = [];
+                for(var i = 0; i < results.rows.length; i++){
+                    cards[i] = results.rows.item(i);
+                }
+                $rootScope.cards = cards;
+            });
+        }
+
+
         dbService.init().then(function(){
             var downloadedFiles = 0;
             var neededDownloads = 0;
@@ -11,7 +25,7 @@ myApp.controller('AppController', ['$rootScope', '$location', 'dbService', 'file
             var refresh_cards = function(){
                 console.log(neededDownloads, downloadedFiles, downloadErrors);
                 if(neededDownloads === (downloadedFiles + downloadErrors)){
-                    refresh_cards_list();
+                    $rootScope.refresh_cards_list();
                 }
             };
             dbService.getEmptyPhotos().then(function (results) {
@@ -36,18 +50,6 @@ myApp.controller('AppController', ['$rootScope', '$location', 'dbService', 'file
             });
         });       
 
-        $rootScope.cards = [];
-
-        $rootScope.refresh_cards_list = function(){
-            console.log('refreshing cards');
-            dbService.getCards().then(function (results) {
-                var cards = [];
-                for(var i = 0; i < results.rows.length; i++){
-                    cards[i] = results.rows.item(i);
-                }
-                $rootScope.cards = cards;
-            });
-        }
         $rootScope.refresh_cards_list();
 
 

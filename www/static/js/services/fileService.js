@@ -8,11 +8,12 @@ myApp.factory('fileService',['$q',function($q){
             var LocalFileSystem = LocalFileSystem || window;
             window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
             window.requestFileSystem(LocalFileSystem.PERSISTENT, 2*1024*1024, function(fs){
-                fs.root.getFile("derp.txt", {create: true, exclusive: false}, 
+                fs.root.getFile("write-file-test.txt", {create: true, exclusive: false}, 
                     function(file) {
                         var filename = url.substr(url.lastIndexOf("/")+1);
                         var path = file.toURL().replace(file.name,"");
-                        file.remove(); //remove it so we can use the name
+                        // file.remove(); //remove it so we can use the name
+                        if(typeof FileTransfer === "undefined") return deferred.reject();
                         (new FileTransfer()).download(
                             encodeURI(url),
                             path + filename,
