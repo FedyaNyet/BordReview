@@ -19,6 +19,8 @@ html body .topcoat-spinner {
   top: 50%;
   left: 50%;
   display: none;
+  margin-left: -18px;
+  margin-top: -18px;
 }
 html body #content-wrapper {
   width: inherit;
