@@ -8,6 +8,18 @@ html body {
   font-family: source-sans-pro, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
+html body .topcoat-spinner {
+  position: absolute;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  z-index: 2000;
+  top: 50%;
+  left: 50%;
+  display: none;
+}
 html body #content-wrapper {
   width: inherit;
   height: 100%;
@@ -103,11 +115,14 @@ html body #content-wrapper .slide .page.scrollable {
   right: 0px;
   top: 69px;
 }
-html body #content-wrapper .slide .page.scrollable .card-time {
+html body #content-wrapper .slide .page.scrollable .topcoat-list {
+  overflow: hidden;
+}
+html body #content-wrapper .slide .page.scrollable .topcoat-list .card-item {
   position: relative;
   padding-left: 70px;
 }
-html body #content-wrapper .slide .page.scrollable .card-time img {
+html body #content-wrapper .slide .page.scrollable .topcoat-list .card-item img {
   display: inline-block;
   position: absolute;
   top: 0px;

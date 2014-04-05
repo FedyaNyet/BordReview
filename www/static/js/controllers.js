@@ -21,6 +21,7 @@ myApp.controller('AppController', ['$rootScope', '$location', 'dbService', 'file
         
 
         dbService.init().then(function(){
+            $('.topcoat-spinner').show();
             dbService.getEmptyPhotos().then(function (results) {
                 var PhotoHandler = {
                     neededDownloads: results.rows.length,
@@ -29,6 +30,7 @@ myApp.controller('AppController', ['$rootScope', '$location', 'dbService', 'file
                     refresh_cards: function(){
                         console.log(PhotoHandler.neededDownloads, PhotoHandler.downloadedFiles, PhotoHandler.downloadErrors);
                         if(PhotoHandler.neededDownloads === (PhotoHandler.downloadedFiles + PhotoHandler.downloadErrors)){
+                            $('.topcoat-spinner').hide();
                             $rootScope.refresh_cards_list();
                         }
                     },

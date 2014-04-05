@@ -16,6 +16,19 @@ html{
         font-family: source-sans-pro, sans-serif;
         -webkit-font-smoothing: antialiased;
 
+        .topcoat-spinner{
+            position: absolute;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+            z-index: 2000;
+            top: 50%;
+            left: 50%;
+            display: none;
+        }
+
         #content-wrapper{
             width: inherit;
             height: 100%;
@@ -122,17 +135,21 @@ html{
                         right: 0px;
                         top: @nav-bar-height;
 
-                        .card-time{
-                            position:relative;
-                            padding-left: 70px;
+                        .topcoat-list{
+                            overflow: hidden;
 
-                            img{
-                                display: inline-block;
-                                position: absolute;
-                                top: 0px;
-                                left: 0px;
-                                height: 60px;
-                                width: 60px;
+                            .card-item{
+                                position:relative;
+                                padding-left: 70px;
+
+                                img{
+                                    display: inline-block;
+                                    position: absolute;
+                                    top: 0px;
+                                    left: 0px;
+                                    height: 60px;
+                                    width: 60px;
+                                }
                             }
                         }
                     }
