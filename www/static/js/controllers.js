@@ -16,6 +16,7 @@ myApp.controller('AppController', ['$rootScope', '$location', 'dbService', 'file
                 for(var i = 0; i < results.rows.length; i++){
                     cards[i] = results.rows.item(i);
                 }
+                $('.topcoat-spinner').hide();
                 $rootScope.cards = cards;
 
             });
@@ -34,7 +35,6 @@ myApp.controller('AppController', ['$rootScope', '$location', 'dbService', 'file
                     refresh_cards: function(){
                         console.log(PhotoHandler.neededDownloads, PhotoHandler.downloadedFiles, PhotoHandler.downloadErrors);
                         if(PhotoHandler.neededDownloads === (PhotoHandler.downloadedFiles + PhotoHandler.downloadErrors)){
-                            $('.topcoat-spinner').hide();
                             $rootScope.refresh_cards_list();
                         }
                     },
