@@ -10,13 +10,12 @@ myApp.controller('AppController', ['$rootScope', '$location', 'dbService', 'file
         }
 
         $rootScope.refresh_cards_list = function(){
-            console.log('refreshing cards');
             dbService.getCards().then(function (results) {
                 var cards = [];
                 for(var i = 0; i < results.rows.length; i++){
                     cards[i] = results.rows.item(i);
                 }
-                $('.topcoat-spinner').hide();
+                if(results.rows.length) $('.topcoat-spinner').hide();
                 $rootScope.cards = cards;
 
             });
