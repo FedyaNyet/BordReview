@@ -5,6 +5,10 @@ myApp.controller('AppController', ['$rootScope', '$location', 'dbService', 'file
 
  
         $rootScope.cards = [];
+        
+        $rootScope.getCardPath = function(card){
+            return card.path;
+        };
 
         $rootScope.refresh_cards_list = function(){
             console.log('refreshing cards');
@@ -14,6 +18,7 @@ myApp.controller('AppController', ['$rootScope', '$location', 'dbService', 'file
                     cards[i] = results.rows.item(i);
                 }
                 $rootScope.cards = cards;
+
             });
         };
         
@@ -93,7 +98,6 @@ myApp.controller('NavController',['$rootScope','$scope', '$location',
 
 myApp.controller('ListCtrl',["$rootScope",'$scope', 'dbService',
     function ($scope, dbService) {
-        
 
         $scope.search = function(query){
             $('.topcoat-navigation-bar__title').hide();
