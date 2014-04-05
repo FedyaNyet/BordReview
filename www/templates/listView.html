@@ -16,11 +16,11 @@
 </div>
 <div class="main-content topcoat-list__container list ">
     <div class="page scrollable">
-        <h3 class="topcoat-list__header">Some List of Features</h3>
+        <h3 class="topcoat-list__header">All Cards</h3>
         <ul class="topcoat-list">
             <li ng-repeat="card in cards" class="topcoat-list__item card-item">
                 <div>
-                    <img ng-src="{{card.path}}"><span>{{card.id}}) {{card.answer}}</span>
+                    <img ng-src="{{getCardPath(card)}}"><span>{{card.id}}) {{card.answer}}</span>
                </div>
             </li>
         </ul>

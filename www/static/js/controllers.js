@@ -5,7 +5,10 @@ myApp.controller('AppController', ['$rootScope', '$location', 'dbService', 'file
 
  
         $rootScope.cards = [];
-        
+        $rootScope.getCardPath = function(card){
+            return card.path.replace("cdvfile://","");
+        }
+
         $rootScope.refresh_cards_list = function(){
             console.log('refreshing cards');
             dbService.getCards().then(function (results) {
