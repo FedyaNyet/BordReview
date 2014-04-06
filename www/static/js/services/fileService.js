@@ -18,7 +18,8 @@ myApp.factory('fileService',['$q',function($q){
                             encodeURI(url),
                             path + filename,
                             function(theFile) {
-                                console.log('file downloaded')
+                                console.log('file downloaded');
+                                console.log(theFile);
                                 deferred.resolve(theFile.toURL(), theFile.fullPath);
                             },
                             function(error) {
