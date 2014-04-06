@@ -34,6 +34,15 @@ html body #content-wrapper .topcoat-navigation-bar {
   width: 100%;
   z-index: 100;
 }
+html body #content-wrapper .topcoat-navigation-bar .search {
+  background-color: #e5e9e8;
+  border: none;
+  border-bottom: 1px solid #8D8D8D;
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: #454545;
+  width: 100%;
+}
 html body #content-wrapper .topcoat-navigation-bar .topcoat-icon-button--quiet {
   margin-top: .6em;
 }

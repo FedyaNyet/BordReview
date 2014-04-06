@@ -5,9 +5,6 @@ myApp.controller('AppController', ['$rootScope', '$location', 'dbService', 'file
 
  
         $rootScope.cards = [];
-        $rootScope.getCardPath = function(card){
-            return card.path.replace("cdvfile://","");
-        }
 
         $rootScope.refresh_cards_list = function(){
             dbService.getCards().then(function (results) {
@@ -32,7 +29,7 @@ myApp.controller('AppController', ['$rootScope', '$location', 'dbService', 'file
                     downloadedFiles: 0,
                     downloadErrors: 0,
                     refresh_cards: function(){
-                        console.log(PhotoHandler.neededDownloads, PhotoHandler.downloadedFiles, PhotoHandler.downloadErrors);
+                        console.log(PhotoHandler.downloadedFiles + PhotoHandler.downloadErrors + "/" + PhotoHandler.neededDownloads);
                         if(PhotoHandler.neededDownloads === (PhotoHandler.downloadedFiles + PhotoHandler.downloadErrors)){
                             $rootScope.refresh_cards_list();
                         }
@@ -94,8 +91,19 @@ myApp.controller('NavController',['$rootScope','$scope', '$location',
 myApp.controller('ListCtrl',["$rootScope",'$scope', 'dbService',
     function ($scope, dbService) {
 
-        $scope.search = function(query){
-            $('.topcoat-navigation-bar__title').hide();
+        $scope.search = "";
+
+        $scope.doSearch = function(query){
+            var title = $('.topcoat-navigation-bar__title');
+            if(title.is(":visible")){
+                $scope.search = "";
+                $('.topcoat-navigation-bar__title').hide();
+                $('[name=search]').show().focus().trigger('click');
+            }else{
+                $('.topcoat-navigation-bar__title').show();
+                $('[name=search]').hide();
+            }
+
         }
 
         $scope.getListItemClass = function($index){
