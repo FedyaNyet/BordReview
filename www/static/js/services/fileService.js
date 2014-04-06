@@ -19,8 +19,7 @@ myApp.factory('fileService',['$q',function($q){
                             path + filename,
                             function(theFile) {
                                 console.log('file downloaded');
-                                console.log(theFile);
-                                deferred.resolve(theFile.toURL(), theFile.fullPath);
+                                deferred.resolve(theFile.fullPath);
                             },
                             function(error) {
                                 console.log("download error source " + error.source);
