@@ -100,7 +100,11 @@ myApp.controller('ListCtrl',["$rootScope",'$scope', 'dbService',
                 if(SoftKeyboard)SoftKeyboard.show();
                 $('.topcoat-navigation-bar__item.right .icon').html('cancel');
                 $('.topcoat-navigation-bar__title').hide();
-                $('[name=search]').show().focus(); 
+                $('[name=search]').show(); 
+                setTimeout(function() { 
+                    $('[name=search]:visible').focus(); 
+                    if(SoftKeyboard)SoftKeyboard.show();
+                }, 1000);
                 $scope.searchActive = true;
             }else{
                 $('[name=search]').val("");
