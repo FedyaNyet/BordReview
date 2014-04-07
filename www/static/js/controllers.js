@@ -106,6 +106,7 @@ myApp.controller('ListCtrl',["$rootScope",'$scope', 'dbService',
             }else{
                 $('.topcoat-navigation-bar__title').show();
                 $('[name=search]').blur().hide();
+                SoftKeyboard.hide();
             }
         }
 
