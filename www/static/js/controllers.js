@@ -99,12 +99,14 @@ myApp.controller('ListCtrl',["$rootScope",'$scope', 'dbService',
                 $scope.search = "";
                 $('.topcoat-navigation-bar__title').hide();
                 $('[name=search]').show(); 
-                setTimeout(function() { $('[name=search]:visible').focus(); }, 1000);
+                setTimeout(function() { 
+                    $('[name=search]:visible').focus(); 
+                    SoftKeyboard.show();
+                }, 1000);
             }else{
                 $('.topcoat-navigation-bar__title').show();
                 $('[name=search]').blur().hide();
             }
-
         }
 
         $scope.getListItemClass = function($index){
