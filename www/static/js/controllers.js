@@ -91,22 +91,24 @@ myApp.controller('NavController',['$rootScope','$scope', '$location',
 myApp.controller('ListCtrl',["$rootScope",'$scope', 'dbService',
     function ($scope, dbService) {
 
-        $scope.search = "";
+        $scope.searchQuery = "";
+        $scope.searchActive = false;
 
+        var SoftKeyboard = SoftKeyboard || false;
         $scope.doSearch = function(query){
-            var title = $('.topcoat-navigation-bar__title');
-            if(title.is(":visible")){
-                $scope.search = "";
+            if(!$scope.searchActive){
+                if(SoftKeyboard)SoftKeyboard.show();
+                $('.topcoat-navigation-bar__item.right .icon').html('cancel');
                 $('.topcoat-navigation-bar__title').hide();
-                $('[name=search]').show(); 
-                setTimeout(function() { 
-                    $('[name=search]:visible').focus(); 
-                    SoftKeyboard.show();
-                }, 1000);
+                $('[name=search]').show().focus(); 
+                $scope.searchActive = true;
             }else{
+                $('[name=search]').val("");
+                if(SoftKeyboard)SoftKeyboard.hide();
+                $('.topcoat-navigation-bar__item.right .icon').html('search');
                 $('.topcoat-navigation-bar__title').show();
                 $('[name=search]').blur().hide();
-                SoftKeyboard.hide();
+                $scope.searchActive = false;
             }
         }
 
