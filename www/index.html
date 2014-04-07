@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:ng="http://angularjs.org" lang="en">
+    <head>
+        <title>NeuroRad</title>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0"/>
+
+        <link rel="stylesheet" type="text/css" href="static/css/reset.css" />
+        <link rel="stylesheet" type="text/css" href="static/css/icomatic/icomatic.css"/>
+        <link rel="stylesheet" type="text/css" href="static/css/topcoat-spinner.css" />
+        <link rel="stylesheet" type="text/css" href="static/css/topcoat-mobile-light.min.css">
+        <link rel="stylesheet" type="text/css" href="static/css/index.css" />
+
+        <!-- PhoneGap Dep. -->
+        <script type="text/javascript" src="cordova.js"></script>
+        <!-- Libraries -->
+        <script src="static/js/lib/angular.min.js"></script>
+        <script src="static/js/lib/angular-route.min.js"></script>
+        <script src="static/js/lib/angular-touch.min.js"></script>
+        <script src="static/js/lib/jquery-1.11.0.min.js"></script>
+        <!-- App Code -->
+        <script src="static/js/app.js"></script>
+        <script src="static/js/services/dbService.js"></script>
+        <script src="static/js/services/fileService.js"></script>
+        <script src="static/js/controllers.js"></script>
+
+        <!-- Start the App! -->
+        <script>
+            document.addEventListener("deviceready", function() {
+                console.log('deviceready');
+                angular.bootstrap(document, ["myApp"]);    
+            }, false);
+        </script>
+    </head>
+    <body ng-controller="AppController">
+        <div class="topcoat-spinner"></div>
+        <div id="content-wrapper">
+            <ng-include src="'templates/side-nav.html'" onload="hideNav()"  ng-controller="NavController"></ng-include>
+            <div class="slide">
+                <ng-view></ng-view>
+            </div>
+        </div>
+    </body>
+</html>

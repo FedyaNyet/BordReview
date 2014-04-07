@@ -1,0 +1,160 @@
+html,
+html body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+html body {
+  font-family: source-sans-pro, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+html body .topcoat-spinner {
+  position: absolute;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  z-index: 2000;
+  top: 50%;
+  left: 50%;
+  display: none;
+  margin-left: -18px;
+  margin-top: -18px;
+}
+html body #content-wrapper {
+  width: inherit;
+  height: 100%;
+  overflow-x: hidden;
+  display: block;
+  position: relative;
+}
+html body #content-wrapper .topcoat-navigation-bar {
+  position: absolute;
+  width: 100%;
+  z-index: 100;
+}
+html body #content-wrapper .topcoat-navigation-bar .search {
+  background-color: #e5e9e8;
+  border: none;
+  border-bottom: 1px solid #8D8D8D;
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: #454545;
+  width: 100%;
+}
+html body #content-wrapper .topcoat-navigation-bar .topcoat-icon-button--quiet {
+  margin-top: .6em;
+}
+html body #content-wrapper .topcoat-navigation-bar .topcoat-icon-button--quiet:hover {
+  background-color: transparent;
+  box-shadow: none;
+  border: 1px solid transparent;
+}
+html body #content-wrapper .topcoat-navigation-bar .topcoat-icon-button--quiet.ng-click-active {
+  color: #969696;
+}
+html body #content-wrapper .topcoat-navigation-bar .topcoat-icon-button--quiet .icomatic.topcoat-icon.icon {
+  font-size: 26px;
+  height: 26px;
+  line-height: 26px;
+}
+html body #content-wrapper .side-nav {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 140px;
+  height: 100%;
+  background-color: #353535;
+}
+html body #content-wrapper .side-nav .side-nav__list__container {
+  border-top: none;
+  border-bottom: none;
+}
+html body #content-wrapper .side-nav .side-nav__list__container .side-nav__list {
+  border: none;
+}
+html body #content-wrapper .side-nav .side-nav__list__container .side-nav__list .side-nav__list__item {
+  padding: 0;
+  background-color: #353535;
+  border-color: #9daca9;
+}
+html body #content-wrapper .side-nav .side-nav__list__container .side-nav__list .side-nav__list__item.is-active {
+  background-color: #707070;
+}
+html body #content-wrapper .side-nav .side-nav__list__container .side-nav__list .side-nav__list__item .side-nav__button {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 1.25rem;
+  box-sizing: border-box;
+  color: #F1F1F1;
+  text-decoration: none;
+}
+html body #content-wrapper .side-nav .side-nav__list__container .side-nav__list .side-nav__list__item .side-nav__button:active {
+  background-color: #353535;
+}
+html body #content-wrapper .slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transition-duration: 0.25s;
+  -webkit-transition-duration: 0.25s;
+  -webkit-transform: translate3d(0, 0, 0);
+  -webkit-box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.57);
+  -moz-box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.57);
+  box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, 0.57);
+}
+html body #content-wrapper .slide.nav-open {
+  left: 140px;
+}
+html body #content-wrapper .slide .page {
+  background-color: #dfe2e2;
+  overflow: hidden;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  top: 69px;
+}
+html body #content-wrapper .slide .page.scrollable {
+  overflow: auto;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  top: 69px;
+}
+html body #content-wrapper .slide .page.scrollable .topcoat-list {
+  overflow: hidden;
+}
+html body #content-wrapper .slide .page.scrollable .topcoat-list .card-item {
+  position: relative;
+  padding-left: 70px;
+}
+html body #content-wrapper .slide .page.scrollable .topcoat-list .card-item img {
+  display: inline-block;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: 60px;
+  width: 60px;
+}
+@media screen and (min-width: 640px) {
+  /* @media screen and (min-width: 880px) { */
+  .side-nav {
+    top: 69px;
+  }
+  .slide {
+    position: absolute;
+    left: 140px;
+    right: 0;
+  }
+  .slide .topcoat-navigation-bar {
+    left: -140px;
+  }
+  .slide .topcoat-navigation-bar .slide-menu-button {
+    display: none;
+  }
+}

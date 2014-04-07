@@ -1,0 +1,29 @@
+
+<div class="topcoat-navigation-bar">
+    <div class="topcoat-navigation-bar__item left quarter">
+        <a id="slide-menu-button" class="topcoat-icon-button--quiet slide-menu-button" ng-click="toggleSideNav()">
+            <span class="icomatic topcoat-icon icon">listview</span>
+        </a>
+    </div>
+    <div class="topcoat-navigation-bar__item center half">
+        <h1 class="topcoat-navigation-bar__title">BordReview</h1>
+        <input ng-model="searchQuery" name="search" class="search"></input>
+    </div>
+    <div class="topcoat-navigation-bar__item right quarter">
+        <a class="topcoat-icon-button--quiet" ng-click="doSearch('Search clicked')">
+            <span class="icomatic topcoat-icon icon">search</span>
+        </a>
+    </div>
+</div>
+<div class="main-content topcoat-list__container list ">
+    <div class="page scrollable">
+        <h3 class="topcoat-list__header">All Cards</h3>
+        <ul class="topcoat-list">
+            <li ng-repeat="card in cards" class="topcoat-list__item card-item">
+                <div>
+                    <img ng-src="{{card.path}}"><span>{{card.id}}) {{card.answer}}</span>
+               </div>
+            </li>
+        </ul>
+    </div>
+</div>
