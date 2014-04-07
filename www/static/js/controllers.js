@@ -98,10 +98,10 @@ myApp.controller('ListCtrl',["$rootScope",'$scope', 'dbService',
             if(title.is(":visible")){
                 $scope.search = "";
                 $('.topcoat-navigation-bar__title').hide();
-                $('[name=search]').show().focus().trigger('click');
+                $('[name=search]').show().focus();
             }else{
                 $('.topcoat-navigation-bar__title').show();
-                $('[name=search]').hide();
+                $('[name=search]').blur().hide();
             }
 
         }

@@ -56,7 +56,8 @@
     <preference name="android-minSdkVersion"      value="7" />  
     <!-- android: app install location. 'auto' will choose. 'internalOnly' is device memory. 'preferExternal' is SDCard. -->            
     <preference name="android-installLocation"    value="auto" />           
-
+    <!-- show keyboard on js focus call -->
+    <preference name="KeyboardDisplayRequiresUserAction" value="false">
     <!-- Plugins can also be added here. -->
     <!-- <gap:plugin name="hu.dpal.phonegap.plugins.spinnerdialog" version="0.1.5" /> -->
     <!--
