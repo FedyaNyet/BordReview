@@ -94,10 +94,9 @@ myApp.controller('ListCtrl',["$rootScope",'$scope', 'dbService',
         $scope.searchQuery = "";
         $scope.searchActive = false;
 
-        var SoftKeyboard = SoftKeyboard || false;
+        // var SoftKeyboard = SoftKeyboard || false;
         $scope.doSearch = function(query){
             if(!$scope.searchActive){
-                if(SoftKeyboard)SoftKeyboard.show();
                 $('.topcoat-navigation-bar__item.right .icon').html('cancel');
                 $('.topcoat-navigation-bar__title').hide();
                 $('[name=search]').show(); 
