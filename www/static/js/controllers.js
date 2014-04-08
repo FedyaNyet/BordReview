@@ -112,7 +112,7 @@ myApp.controller('ListCtrl',["$rootScope",'$scope', 'dbService',
                                 SoftKeyboard.hide();
                             }
                         }).focus(); 
-                }, 200);
+                }, 600);
             }
         };
 
