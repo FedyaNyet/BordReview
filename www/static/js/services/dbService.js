@@ -82,7 +82,7 @@ myApp.factory('dbService',['$q',function($q){
                 filter = " AND ((answer LIKE ?) OR (question LIKE ?)) ";
                 params = ["%"+query+"%","%"+query+"%"];
             }
-            return runQueryPromise( "SELECT c.id, answer, p.url, p.path FROM `card` as c JOIN `photo` as p on p.card_id = c.id WHERE p.position = 0 "+ filter +" ORDER BY c.id", params);
+            return runQueryPromise( "SELECT c.id, answer, p.url, p.path, p.mini FROM `card` as c JOIN `photo` as p on p.card_id = c.id WHERE p.position = 0 "+ filter +" ORDER BY c.id", params);
         },
         getEmptyPhotos: function(){
             return runQueryPromise("SELECT * FROM `photo` WHERE path=\"\" ORDER BY card_id",[]);
