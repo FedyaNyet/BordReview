@@ -75,10 +75,6 @@ myApp.factory('dbService',['$q',function($q){
             }
             return deferred.promise;
         },
-<<<<<<< HEAD
-        getCards:function(){
-            return runQueryPromise("SELECT c.id, answer, p.url, p.mini, p.path FROM `card` as c JOIN `photo` as p on p.card_id = c.id where p.position = 0 ORDER BY c.id",[]);
-=======
         getCards:function(query){
             var filter = "";
             var params = [];
@@ -87,7 +83,6 @@ myApp.factory('dbService',['$q',function($q){
                 params = ["%"+query+"%","%"+query+"%"];
             }
             return runQueryPromise( "SELECT c.id, answer, p.url, p.path FROM `card` as c JOIN `photo` as p on p.card_id = c.id WHERE p.position = 0 "+ filter +" ORDER BY c.id", params);
->>>>>>> FETCH_HEAD
         },
         getEmptyPhotos: function(){
             return runQueryPromise("SELECT * FROM `photo` WHERE path=\"\" ORDER BY card_id",[]);
