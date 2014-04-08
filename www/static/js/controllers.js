@@ -1,5 +1,14 @@
 'use strict';
 
+
+function processCardResults(results){
+    var cards = [];
+    for(var i = 0; i < results.rows.length; i++){
+        cards[i] = results.rows.item(i);
+    }
+    return cards;
+}
+
 myApp.controller('AppController', ['$rootScope', '$location', 'dbService', 'fileService', 
     function($rootScope, $location, dbService, fileService){        
 
@@ -8,13 +17,8 @@ myApp.controller('AppController', ['$rootScope', '$location', 'dbService', 'file
 
         $rootScope.refresh_cards_list = function(){
             dbService.getCards().then(function (results) {
-                var cards = [];
-                for(var i = 0; i < results.rows.length; i++){
-                    cards[i] = results.rows.item(i);
-                }
                 if(results.rows.length) $('.topcoat-spinner').hide();
-                $rootScope.cards = cards;
-
+                $rootScope.cards = processCardResults(results);
             });
         };
         
@@ -89,14 +93,18 @@ myApp.controller('NavController',['$rootScope','$scope', '$location',
 ]);
 
 myApp.controller('ListCtrl',["$rootScope",'$scope', 'dbService',
-    function ($scope, dbService) {
+    function ($rootScope, $scope, dbService) {
     
+        $scope.cards = $rootScope.cards;
+
         // var SoftKeyboard = SoftKeyboard || {hide:function(){console.log('hidding keyboard');},show:function(){console.log('showing keyboard');}};
         $scope.search = {
             query: "",
             active: false,
             do: function(){
-                console.log("search"+ $scope.search.query);
+                dbService.getCards($scope.search.query).then(function (results) {
+                    $scope.cards = processCardResults(results);
+                });
             },
             toggle: function(){
                 $scope.search.active = !$scope.search.active;
