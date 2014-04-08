@@ -14,15 +14,14 @@ myApp.controller('AppController', ['$rootScope', '$location', 'dbService', 'file
                 }
                 if(results.rows.length) $('.topcoat-spinner').hide();
                 $rootScope.cards = cards;
-
             });
         };
         
-
         
 
         dbService.init().then(function(){
             $('.topcoat-spinner').show();
+            $rootScope.refresh_cards_list();
             dbService.getEmptyPhotos().then(function (results) {
                 var PhotoHandler = {
                     neededDownloads: results.rows.length,

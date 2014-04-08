@@ -53,12 +53,12 @@ myApp.factory('dbService',['$q',function($q){
                     );
                 }
                 if(!window.localStorage.getItem('photoes')){
-                    runQueryPromise('CREATE TABLE IF NOT EXISTS `photo` (`id` int(11) NOT NULL, `url` varchar(100), `path` varchar(50), `position` int(5),`card_id` int(11) NOT NULL, PRIMARY KEY (`id`));').then(
+                    runQueryPromise('CREATE TABLE IF NOT EXISTS `photo` (`id` int(11) NOT NULL, `mini` varchar(100), `url` varchar(100), `path` varchar(50), `position` int(5),`card_id` int(11) NOT NULL, PRIMARY KEY (`id`));').then(
                         function(){
                             window.localStorage.setItem('photoes','created');
                             for(var idx in fixture.photos){
                                 var photo = fixture.photos[idx];
-                                runQueryPromise('INSERT INTO `photo` (`id`, `url`, `path`, `position`, `card_id`) VALUES (?,?,?,?,?);',[photo.id, photo.url, photo.path, photo.position, photo.card_id]);
+                                runQueryPromise('INSERT INTO `photo` (`id`, `mini`, `url`, `path`, `position`, `card_id`) VALUES (?,?,?,?,?,?);',[photo.id, photo.mini, photo.url, photo.path, photo.position, photo.card_id]);
                             }
                             if(!isFirstRun()){
                                 //both tables have been made
@@ -76,7 +76,7 @@ myApp.factory('dbService',['$q',function($q){
             return deferred.promise;
         },
         getCards:function(){
-            return runQueryPromise("SELECT c.id, answer, p.url, p.path FROM `card` as c JOIN `photo` as p on p.card_id = c.id where p.position = 0 ORDER BY c.id",[]);
+            return runQueryPromise("SELECT c.id, answer, p.url, p.mini, p.path FROM `card` as c JOIN `photo` as p on p.card_id = c.id where p.position = 0 ORDER BY c.id",[]);
         },
         getEmptyPhotos: function(){
             return runQueryPromise("SELECT * FROM `photo` WHERE path=\"\" ORDER BY card_id",[]);
@@ -211,54 +211,54 @@ var fixture = {
     ],
 
     photos:[
-        {id: 1,     url:"http://fyodorwolf.com/BordReview/cases/2-10.jpg",     path: "",   position:0, card_id: 10},
-        {id: 2,     url:"http://fyodorwolf.com/BordReview/cases/2-11a.jpg",    path: "",   position:0, card_id: 11},
-        {id: 3,     url:"http://fyodorwolf.com/BordReview/cases/2-11b.jpg",    path: "",   position:1, card_id: 11},
-        {id: 4,     url:"http://fyodorwolf.com/BordReview/cases/2-12.jpg",     path: "",   position:0, card_id: 12},
-        {id: 5,     url:"http://fyodorwolf.com/BordReview/cases/2-13.jpg",     path: "",   position:0, card_id: 13},
-        {id: 6,     url:"http://fyodorwolf.com/BordReview/cases/2-14a.jpg",    path: "",   position:0, card_id: 14},
-        {id: 7,     url:"http://fyodorwolf.com/BordReview/cases/2-14b.jpg",    path: "",   position:1, card_id: 14},
-        {id: 8,     url:"http://fyodorwolf.com/BordReview/cases/2-15.jpg",     path: "",   position:0, card_id: 15},
-        {id: 9,     url:"http://fyodorwolf.com/BordReview/cases/2-16.jpg",     path: "",   position:0, card_id: 16},
-        {id: 10,    url:"http://fyodorwolf.com/BordReview/cases/2-17.jpg",     path: "",   position:0, card_id: 17},
-        {id: 11,    url:"http://fyodorwolf.com/BordReview/cases/2-18a.jpg",    path: "",   position:0, card_id: 18},
-        {id: 12,    url:"http://fyodorwolf.com/BordReview/cases/2-18b.jpg",    path: "",   position:1, card_id: 18},
-        {id: 13,    url:"http://fyodorwolf.com/BordReview/cases/2-19.jpg",     path: "",   position:0, card_id: 19},
-        {id: 14,    url:"http://fyodorwolf.com/BordReview/cases/2-1a.jpg",     path: "",   position:0, card_id: 1},
-        {id: 15,    url:"http://fyodorwolf.com/BordReview/cases/2-1b.jpg",     path: "",   position:1, card_id: 1},
-        {id: 16,    url:"http://fyodorwolf.com/BordReview/cases/2-20a.jpg",    path: "",   position:0, card_id: 20},
-        {id: 17,    url:"http://fyodorwolf.com/BordReview/cases/2-20b.jpg",    path: "",   position:1, card_id: 20},
-        {id: 18,    url:"http://fyodorwolf.com/BordReview/cases/2-21a.jpg",    path: "",   position:0, card_id: 21},
-        {id: 19,    url:"http://fyodorwolf.com/BordReview/cases/2-21b.jpg",    path: "",   position:1, card_id: 21},
-        {id: 20,    url:"http://fyodorwolf.com/BordReview/cases/2-21c.jpg",    path: "",   position:2, card_id: 21},
-        {id: 21,    url:"http://fyodorwolf.com/BordReview/cases/2-22a.jpg",    path: "",   position:0, card_id: 22},
-        {id: 22,    url:"http://fyodorwolf.com/BordReview/cases/2-22b.jpg",    path: "",   position:1, card_id: 22},
-        {id: 23,    url:"http://fyodorwolf.com/BordReview/cases/2-23.jpg",     path: "",   position:0, card_id: 23},
-        {id: 24,    url:"http://fyodorwolf.com/BordReview/cases/2-24a.jpg",    path: "",   position:0, card_id: 24},
-        {id: 25,    url:"http://fyodorwolf.com/BordReview/cases/2-24b.jpg",    path: "",   position:1, card_id: 24},
-        {id: 26,    url:"http://fyodorwolf.com/BordReview/cases/2-24c.jpg",    path: "",   position:2, card_id: 24},
-        {id: 27,    url:"http://fyodorwolf.com/BordReview/cases/2-24d.jpg",    path: "",   position:3, card_id: 24},
-        {id: 28,    url:"http://fyodorwolf.com/BordReview/cases/2-24e.jpg",    path: "",   position:4, card_id: 24},
-        {id: 29,    url:"http://fyodorwolf.com/BordReview/cases/2-2a.jpg",     path: "",   position:0, card_id: 2},
-        {id: 30,    url:"http://fyodorwolf.com/BordReview/cases/2-2b.jpg",     path: "",   position:1, card_id: 2},
-        {id: 31,    url:"http://fyodorwolf.com/BordReview/cases/2-2c.jpg",     path: "",   position:2, card_id: 2},
-        {id: 32,    url:"http://fyodorwolf.com/BordReview/cases/2-3.jpg",      path: "",   position:0, card_id: 3},
-        {id: 33,    url:"http://fyodorwolf.com/BordReview/cases/2-4.jpg",      path: "",   position:0, card_id: 4},
-        {id: 34,    url:"http://fyodorwolf.com/BordReview/cases/2-5a.jpg",     path: "",   position:0, card_id: 5},
-        {id: 35,    url:"http://fyodorwolf.com/BordReview/cases/2-5b.jpg",     path: "",   position:1, card_id: 5},
-        {id: 36,    url:"http://fyodorwolf.com/BordReview/cases/2-5c.jpg",     path: "",   position:2, card_id: 5},
-        {id: 37,    url:"http://fyodorwolf.com/BordReview/cases/2-6a.jpg",     path: "",   position:0, card_id: 6},
-        {id: 38,    url:"http://fyodorwolf.com/BordReview/cases/2-6b.jpg",     path: "",   position:1, card_id: 6},
-        {id: 39,    url:"http://fyodorwolf.com/BordReview/cases/2-6c.jpg",     path: "",   position:2, card_id: 6},
-        {id: 40,    url:"http://fyodorwolf.com/BordReview/cases/2-6d.jpg",     path: "",   position:3, card_id: 6},
-        {id: 41,    url:"http://fyodorwolf.com/BordReview/cases/2-7a.jpg",     path: "",   position:0, card_id: 7},
-        {id: 42,    url:"http://fyodorwolf.com/BordReview/cases/2-7b.jpg",     path: "",   position:1, card_id: 7},
-        {id: 43,    url:"http://fyodorwolf.com/BordReview/cases/2-7c.jpg",     path: "",   position:2, card_id: 7},
-        {id: 44,    url:"http://fyodorwolf.com/BordReview/cases/2-7d.jpg",     path: "",   position:3, card_id: 7},
-        {id: 45,    url:"http://fyodorwolf.com/BordReview/cases/2-8a.jpg",     path: "",   position:0, card_id: 8},
-        {id: 46,    url:"http://fyodorwolf.com/BordReview/cases/2-8b.jpg",     path: "",   position:1, card_id: 8},
-        {id: 47,    url:"http://fyodorwolf.com/BordReview/cases/2-9a.jpg",     path: "",   position:0, card_id: 9},
-        {id: 48,    url:"http://fyodorwolf.com/BordReview/cases/2-9b.jpg",     path: "",   position:1, card_id: 9},
-        {id: 49,    url:"http://fyodorwolf.com/BordReview/cases/2-9c.jpg",     path: "",   position:2, card_id: 9}
+        {id: 1,     mini:"/static/img/mini/2-10.png",    url:"http://fyodorwolf.com/BordReview/cases/2-10.jpg",     path: "",   position:0, card_id: 10},
+        {id: 2,     mini:"/static/img/mini/2-11a.png",   url:"http://fyodorwolf.com/BordReview/cases/2-11a.jpg",    path: "",   position:0, card_id: 11},
+        {id: 3,     mini:"/static/img/mini/2-11b.png",   url:"http://fyodorwolf.com/BordReview/cases/2-11b.jpg",    path: "",   position:1, card_id: 11},
+        {id: 4,     mini:"/static/img/mini/2-12.png",    url:"http://fyodorwolf.com/BordReview/cases/2-12.jpg",     path: "",   position:0, card_id: 12},
+        {id: 5,     mini:"/static/img/mini/2-13.png",    url:"http://fyodorwolf.com/BordReview/cases/2-13.jpg",     path: "",   position:0, card_id: 13},
+        {id: 6,     mini:"/static/img/mini/2-14a.png",   url:"http://fyodorwolf.com/BordReview/cases/2-14a.jpg",    path: "",   position:0, card_id: 14},
+        {id: 7,     mini:"/static/img/mini/2-14b.png",   url:"http://fyodorwolf.com/BordReview/cases/2-14b.jpg",    path: "",   position:1, card_id: 14},
+        {id: 8,     mini:"/static/img/mini/2-15.png",    url:"http://fyodorwolf.com/BordReview/cases/2-15.jpg",     path: "",   position:0, card_id: 15},
+        {id: 9,     mini:"/static/img/mini/2-16.png",    url:"http://fyodorwolf.com/BordReview/cases/2-16.jpg",     path: "",   position:0, card_id: 16},
+        {id: 10,    mini:"/static/img/mini/2-17.png",    url:"http://fyodorwolf.com/BordReview/cases/2-17.jpg",     path: "",   position:0, card_id: 17},
+        {id: 11,    mini:"/static/img/mini/2-18a.png",   url:"http://fyodorwolf.com/BordReview/cases/2-18a.jpg",    path: "",   position:0, card_id: 18},
+        {id: 12,    mini:"/static/img/mini/2-18b.png",   url:"http://fyodorwolf.com/BordReview/cases/2-18b.jpg",    path: "",   position:1, card_id: 18},
+        {id: 13,    mini:"/static/img/mini/2-19.png",    url:"http://fyodorwolf.com/BordReview/cases/2-19.jpg",     path: "",   position:0, card_id: 19},
+        {id: 14,    mini:"/static/img/mini/2-1a.png",    url:"http://fyodorwolf.com/BordReview/cases/2-1a.jpg",     path: "",   position:0, card_id: 1},
+        {id: 15,    mini:"/static/img/mini/2-1b.png",    url:"http://fyodorwolf.com/BordReview/cases/2-1b.jpg",     path: "",   position:1, card_id: 1},
+        {id: 16,    mini:"/static/img/mini/2-20a.png",   url:"http://fyodorwolf.com/BordReview/cases/2-20a.jpg",    path: "",   position:0, card_id: 20},
+        {id: 17,    mini:"/static/img/mini/2-20b.png",   url:"http://fyodorwolf.com/BordReview/cases/2-20b.jpg",    path: "",   position:1, card_id: 20},
+        {id: 18,    mini:"/static/img/mini/2-21a.png",   url:"http://fyodorwolf.com/BordReview/cases/2-21a.jpg",    path: "",   position:0, card_id: 21},
+        {id: 19,    mini:"/static/img/mini/2-21b.png",   url:"http://fyodorwolf.com/BordReview/cases/2-21b.jpg",    path: "",   position:1, card_id: 21},
+        {id: 20,    mini:"/static/img/mini/2-21c.png",   url:"http://fyodorwolf.com/BordReview/cases/2-21c.jpg",    path: "",   position:2, card_id: 21},
+        {id: 21,    mini:"/static/img/mini/2-22a.png",   url:"http://fyodorwolf.com/BordReview/cases/2-22a.jpg",    path: "",   position:0, card_id: 22},
+        {id: 22,    mini:"/static/img/mini/2-22b.png",   url:"http://fyodorwolf.com/BordReview/cases/2-22b.jpg",    path: "",   position:1, card_id: 22},
+        {id: 23,    mini:"/static/img/mini/2-23.png",    url:"http://fyodorwolf.com/BordReview/cases/2-23.jpg",     path: "",   position:0, card_id: 23},
+        {id: 24,    mini:"/static/img/mini/2-24a.png",   url:"http://fyodorwolf.com/BordReview/cases/2-24a.jpg",    path: "",   position:0, card_id: 24},
+        {id: 25,    mini:"/static/img/mini/2-24b.png",   url:"http://fyodorwolf.com/BordReview/cases/2-24b.jpg",    path: "",   position:1, card_id: 24},
+        {id: 26,    mini:"/static/img/mini/2-24c.png",   url:"http://fyodorwolf.com/BordReview/cases/2-24c.jpg",    path: "",   position:2, card_id: 24},
+        {id: 27,    mini:"/static/img/mini/2-24d.png",   url:"http://fyodorwolf.com/BordReview/cases/2-24d.jpg",    path: "",   position:3, card_id: 24},
+        {id: 28,    mini:"/static/img/mini/2-24e.png",   url:"http://fyodorwolf.com/BordReview/cases/2-24e.jpg",    path: "",   position:4, card_id: 24},
+        {id: 29,    mini:"/static/img/mini/2-2a.png",    url:"http://fyodorwolf.com/BordReview/cases/2-2a.jpg",     path: "",   position:0, card_id: 2},
+        {id: 30,    mini:"/static/img/mini/2-2b.png",    url:"http://fyodorwolf.com/BordReview/cases/2-2b.jpg",     path: "",   position:1, card_id: 2},
+        {id: 31,    mini:"/static/img/mini/2-2c.png",    url:"http://fyodorwolf.com/BordReview/cases/2-2c.jpg",     path: "",   position:2, card_id: 2},
+        {id: 32,    mini:"/static/img/mini/2-3.png",     url:"http://fyodorwolf.com/BordReview/cases/2-3.jpg",      path: "",   position:0, card_id: 3},
+        {id: 33,    mini:"/static/img/mini/2-4.png",     url:"http://fyodorwolf.com/BordReview/cases/2-4.jpg",      path: "",   position:0, card_id: 4},
+        {id: 34,    mini:"/static/img/mini/2-5a.png",    url:"http://fyodorwolf.com/BordReview/cases/2-5a.jpg",     path: "",   position:0, card_id: 5},
+        {id: 35,    mini:"/static/img/mini/2-5b.png",    url:"http://fyodorwolf.com/BordReview/cases/2-5b.jpg",     path: "",   position:1, card_id: 5},
+        {id: 36,    mini:"/static/img/mini/2-5c.png",    url:"http://fyodorwolf.com/BordReview/cases/2-5c.jpg",     path: "",   position:2, card_id: 5},
+        {id: 37,    mini:"/static/img/mini/2-6a.png",    url:"http://fyodorwolf.com/BordReview/cases/2-6a.jpg",     path: "",   position:0, card_id: 6},
+        {id: 38,    mini:"/static/img/mini/2-6b.png",    url:"http://fyodorwolf.com/BordReview/cases/2-6b.jpg",     path: "",   position:1, card_id: 6},
+        {id: 39,    mini:"/static/img/mini/2-6c.png",    url:"http://fyodorwolf.com/BordReview/cases/2-6c.jpg",     path: "",   position:2, card_id: 6},
+        {id: 40,    mini:"/static/img/mini/2-6d.png",    url:"http://fyodorwolf.com/BordReview/cases/2-6d.jpg",     path: "",   position:3, card_id: 6},
+        {id: 41,    mini:"/static/img/mini/2-7a.png",    url:"http://fyodorwolf.com/BordReview/cases/2-7a.jpg",     path: "",   position:0, card_id: 7},
+        {id: 42,    mini:"/static/img/mini/2-7b.png",    url:"http://fyodorwolf.com/BordReview/cases/2-7b.jpg",     path: "",   position:1, card_id: 7},
+        {id: 43,    mini:"/static/img/mini/2-7c.png",    url:"http://fyodorwolf.com/BordReview/cases/2-7c.jpg",     path: "",   position:2, card_id: 7},
+        {id: 44,    mini:"/static/img/mini/2-7d.png",    url:"http://fyodorwolf.com/BordReview/cases/2-7d.jpg",     path: "",   position:3, card_id: 7},
+        {id: 45,    mini:"/static/img/mini/2-8a.png",    url:"http://fyodorwolf.com/BordReview/cases/2-8a.jpg",     path: "",   position:0, card_id: 8},
+        {id: 46,    mini:"/static/img/mini/2-8b.png",    url:"http://fyodorwolf.com/BordReview/cases/2-8b.jpg",     path: "",   position:1, card_id: 8},
+        {id: 47,    mini:"/static/img/mini/2-9a.png",    url:"http://fyodorwolf.com/BordReview/cases/2-9a.jpg",     path: "",   position:0, card_id: 9},
+        {id: 48,    mini:"/static/img/mini/2-9b.png",    url:"http://fyodorwolf.com/BordReview/cases/2-9b.jpg",     path: "",   position:1, card_id: 9},
+        {id: 49,    mini:"/static/img/mini/2-9c.png",    url:"http://fyodorwolf.com/BordReview/cases/2-9c.jpg",     path: "",   position:2, card_id: 9}
     ]
 };
