@@ -90,32 +90,31 @@ myApp.controller('NavController',['$rootScope','$scope', '$location',
 
 myApp.controller('ListCtrl',["$rootScope",'$scope', 'dbService',
     function ($scope, dbService) {
-
-        $scope.searchQuery = "";
-        $scope.searchActive = false;
-
-        // var SoftKeyboard = SoftKeyboard || false;
-        $scope.doSearch = function(query){
-            if(!$scope.searchActive){
-                $('.topcoat-navigation-bar__item.right .icon').html('cancel');
-                $('.topcoat-navigation-bar__title').hide();
-                $('[name=search]').show(); 
+    
+        var SoftKeyboard = SoftKeyboard || {hide:function(){console.log('hidding keyboard');},show:function(){console.log('showing keyboard');}};
+        $scope.search = {
+            query: "",
+            active: false,
+            do: function(){
+                console.log("search"+ $scope.search.query);
+            },
+            toggle: function(){
+                $scope.search.active = !$scope.search.active;
+                $scope.search.query = "";
                 setTimeout(function() {
-                    if($scope.searchActive){
-                        $('[name=search]:visible').focus(); 
-                        if(SoftKeyboard)SoftKeyboard.show();
-                    }
-                }, 1000);
-                $scope.searchActive = true;
-            }else{
-                $('[name=search]').val("");
-                if(SoftKeyboard)SoftKeyboard.hide();
-                $('.topcoat-navigation-bar__item.right .icon').html('search');
-                $('.topcoat-navigation-bar__title').show();
-                $('[name=search]').blur().hide();
-                $scope.searchActive = false;
+                    $('[name=search]')
+                        .off('blur focus')
+                        .on({
+                            focus:function(){
+                                SoftKeyboard.show();
+                            },
+                            blur:function(){
+                                SoftKeyboard.hide();
+                            }
+                        }).focus(); 
+                }, 200);
             }
-        }
+        };
 
         $scope.getListItemClass = function($index){
             if ($index == 0) return "topcoat-list__item--first";

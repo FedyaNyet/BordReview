@@ -6,12 +6,15 @@
         </a>
     </div>
     <div class="topcoat-navigation-bar__item center half">
-        <h1 class="topcoat-navigation-bar__title">BordReview</h1>
-        <input ng-model="searchQuery" name="search" class="search"></input>
+        <h1 ng-if="!search.active" class="topcoat-navigation-bar__title">BordReview</h1>
+        <form ng-if="search.active"  ng-submit="search.do(searchQuery)">
+            <input ng-model="search.query" name="search" class="search" type="text" ng-submit/>
+        </form>
     </div>
     <div class="topcoat-navigation-bar__item right quarter">
-        <a class="topcoat-icon-button--quiet" ng-click="doSearch('Search clicked')">
-            <span class="icomatic topcoat-icon icon">search</span>
+        <a class="topcoat-icon-button--quiet" ng-click="search.toggle()">
+            <span ng-if="!search.active" class="icomatic topcoat-icon icon">search</span>
+            <span ng-if="search.active" class="icomatic topcoat-icon icon">cancel</span>
         </a>
     </div>
 </div>
