@@ -91,7 +91,7 @@ myApp.controller('NavController',['$rootScope','$scope', '$location',
 myApp.controller('ListCtrl',["$rootScope",'$scope', 'dbService',
     function ($scope, dbService) {
     
-        var SoftKeyboard = SoftKeyboard || {hide:function(){console.log('hidding keyboard');},show:function(){console.log('showing keyboard');}};
+        // var SoftKeyboard = SoftKeyboard || {hide:function(){console.log('hidding keyboard');},show:function(){console.log('showing keyboard');}};
         $scope.search = {
             query: "",
             active: false,
@@ -111,8 +111,8 @@ myApp.controller('ListCtrl',["$rootScope",'$scope', 'dbService',
                             blur:function(){
                                 SoftKeyboard.hide();
                             }
-                        }).focus(); 
-                }, 600);
+                        }).focus();
+                }, 200);
             }
         };
 
