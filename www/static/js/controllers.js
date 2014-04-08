@@ -116,6 +116,10 @@ myApp.controller('ListCtrl',["$rootScope",'$scope', 'dbService',
             }
         };
 
+        $scope.$watch('search.query',function(x){
+            $scope.search.do();
+        });
+
         $scope.getListItemClass = function($index){
             if ($index == 0) return "topcoat-list__item--first";
             return "topcoat-list__item";
