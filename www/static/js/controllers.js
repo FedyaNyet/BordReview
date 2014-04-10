@@ -17,7 +17,7 @@ myApp.controller('AppController', ['$rootScope', '$location', 'dbService', 'file
 
         $rootScope.refresh_cards_list = function(){
             dbService.getCards().then(function (results) {
-                if(results.rows.length) $('.topcoat-spinner').hide();
+                if(results.rows.length > 0) $('.topcoat-spinner').hide();
                 $rootScope.cards = processCardResults(results);
             });
         };
@@ -96,6 +96,9 @@ myApp.controller('ListCtrl',["$rootScope",'$scope', 'dbService',
     function ($rootScope, $scope, dbService) {
     
         $scope.cards = $rootScope.cards;
+        $rootScope.$watch('cards',function(){
+            $scope.cards = $rootScope.cards;
+        });
 
         // var SoftKeyboard = SoftKeyboard || {hide:function(){console.log('hidding keyboard');},show:function(){console.log('showing keyboard');}};
         $scope.search = {
@@ -127,6 +130,7 @@ myApp.controller('ListCtrl',["$rootScope",'$scope', 'dbService',
         $scope.$watch('search.query',function(x){
             $scope.search.do();
         });
+
 
         $scope.getListItemClass = function($index){
             if ($index == 0) return "topcoat-list__item--first";
