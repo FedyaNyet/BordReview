@@ -88,10 +88,11 @@ html body #content-wrapper .side-nav .side-nav__list__container .side-nav__list 
   display: inline-block;
   width: auto;
   height: 100%;
-  padding: 1.25rem 1.25rem 1.25rem 1rem;
+  padding: 1.25rem 0 1.25rem 0rem;
   box-sizing: border-box;
   color: #F1F1F1;
   text-decoration: none;
+  margin-left: -5px;
 }
 html body #content-wrapper .side-nav .side-nav__list__container .side-nav__list .side-nav__list__item .side-nav__button:active {
   background-color: #353535;
@@ -101,10 +102,10 @@ html body #content-wrapper .side-nav .side-nav__list__container .side-nav__list 
   display: inline-block;
   height: 18px;
   width: 18px;
+  padding: 1.25rem;
   font-size: 18px;
   color: white;
   line-height: 18px;
-  padding: 0 0 0 10px;
 }
 html body #content-wrapper .slide {
   position: absolute;
