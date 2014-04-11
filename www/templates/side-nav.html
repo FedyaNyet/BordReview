@@ -2,12 +2,15 @@
     <div class="topcoat-list__container side-nav__list__container">
         <ul class="topcoat-list side-nav__list">
             <li class="topcoat-list__item side-nav__list__item" ng-class="{'is-active':sideNavItemIsActive('/')}">
-                <a href="#/" class="side-nav__button" ng-click="sideNaveItemClick($event)">List</a>
+                <span class="icomatic topcoat-icon icon">listview</span>
+                <a href="#/" class="side-nav__button" ng-click="sideNaveItemClick($event)">List View</a>
             </li>
             <li class="topcoat-list__item side-nav__list__item" ng-class="{'is-active':sideNavItemIsActive('/review')}">
+                <span class="icomatic topcoat-icon icon">pencil</span>
                 <a href="#/review" class="side-nav__button" ng-click="sideNaveItemClick($event)">Review</a>
             </li>
             <li class="topcoat-list__item side-nav__list__item" ng-class="{'is-active':sideNavItemIsActive('/settings')}">
+                <span class="icomatic topcoat-icon icon">settings</span>
                 <a href="#/settings" class="side-nav__button" ng-click="sideNaveItemClick($event)">Settings</a>
             </li>
         </ul>

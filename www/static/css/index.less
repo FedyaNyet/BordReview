@@ -1,5 +1,5 @@
 //Variables
-@side-nav-width: 140px;
+@side-nav-width: 180px;
 @side-nav-dark-grey: #353535;
 @nav-bar-height: 69px;
 @slide-duration: .25s;
@@ -93,16 +93,17 @@ html{
                             padding: 0;
                             background-color: @side-nav-dark-grey;
                             border-color: #9daca9;
+                            border-top: 0px;
 
                             &.is-active {
                                 background-color: #707070;
                             }
 
                             .side-nav__button {
-                                display:block;
-                                width:100%;
+                                display: inline-block;
+                                width: auto;
                                 height:100%;
-                                padding: 1.25rem;
+                                padding: 1.25rem 1.25rem 1.25rem 1rem;
                                 box-sizing: border-box;
                                 color: #F1F1F1;
                                 text-decoration:none;
@@ -110,6 +111,16 @@ html{
                                 &:active {
                                     background-color:@side-nav-dark-grey;
                                 }
+                            }
+                            .topcoat-icon.icon{
+                                position: relative;
+                                display: inline-block;
+                                height: 18px;
+                                width: 18px;
+                                font-size: 18px;
+                                color: white;
+                                line-height: 18px;
+                                padding: 0 0 0 10px;
                             }
                         }
                     }

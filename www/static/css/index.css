@@ -64,7 +64,7 @@ html body #content-wrapper .side-nav {
   position: absolute;
   top: 0;
   left: 0;
-  width: 140px;
+  width: 180px;
   height: 100%;
   background-color: #353535;
 }
@@ -79,21 +79,32 @@ html body #content-wrapper .side-nav .side-nav__list__container .side-nav__list 
   padding: 0;
   background-color: #353535;
   border-color: #9daca9;
+  border-top: 0px;
 }
 html body #content-wrapper .side-nav .side-nav__list__container .side-nav__list .side-nav__list__item.is-active {
   background-color: #707070;
 }
 html body #content-wrapper .side-nav .side-nav__list__container .side-nav__list .side-nav__list__item .side-nav__button {
-  display: block;
-  width: 100%;
+  display: inline-block;
+  width: auto;
   height: 100%;
-  padding: 1.25rem;
+  padding: 1.25rem 1.25rem 1.25rem 1rem;
   box-sizing: border-box;
   color: #F1F1F1;
   text-decoration: none;
 }
 html body #content-wrapper .side-nav .side-nav__list__container .side-nav__list .side-nav__list__item .side-nav__button:active {
   background-color: #353535;
+}
+html body #content-wrapper .side-nav .side-nav__list__container .side-nav__list .side-nav__list__item .topcoat-icon.icon {
+  position: relative;
+  display: inline-block;
+  height: 18px;
+  width: 18px;
+  font-size: 18px;
+  color: white;
+  line-height: 18px;
+  padding: 0 0 0 10px;
 }
 html body #content-wrapper .slide {
   position: absolute;
@@ -107,7 +118,7 @@ html body #content-wrapper .slide {
   box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, 0.57);
 }
 html body #content-wrapper .slide.nav-open {
-  left: 140px;
+  left: 180px;
 }
 html body #content-wrapper .slide .page {
   background-color: #dfe2e2;
@@ -148,11 +159,11 @@ html body #content-wrapper .slide .page.scrollable .topcoat-list .card-item img 
   }
   .slide {
     position: absolute;
-    left: 140px;
+    left: 180px;
     right: 0;
   }
   .slide .topcoat-navigation-bar {
-    left: -140px;
+    left: -180px;
   }
   .slide .topcoat-navigation-bar .slide-menu-button {
     display: none;
