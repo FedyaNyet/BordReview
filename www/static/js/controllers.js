@@ -78,12 +78,9 @@ myApp.controller('NavController',['$rootScope','$scope', '$location',
         };
 
         $scope.sideNaveItemClick = function(event){
-            var href = event.target.href;
-            href = href.slice(href.indexOf('#')+1)
-            if(href === $location.path()){
-                $rootScope.hideNav(); //locationChangeStart won't be fired...
-            }
-            $location.path(href);
+            $rootScope.hideNav();
+            var href = event.target.href || $(event.target).closest('[href]').attr('href');
+            $location.path(href.slice(href.indexOf('#')+1));
         };
 
         $scope.sideNavItemIsActive = function(route) {
