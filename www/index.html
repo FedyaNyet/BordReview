@@ -31,6 +31,12 @@
                 console.log('deviceready');
                 angular.bootstrap(document, ["myApp"]);    
             }, false);
+
+            $(function(){
+                if(window.location.origin.indexOf('http') === 0){
+                    document.dispatchEvent(new CustomEvent('deviceready',{}));
+                }
+            });
         </script>
     </head>
     <body ng-controller="AppController">
