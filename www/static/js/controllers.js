@@ -134,4 +134,12 @@ myApp.controller('ListCtrl',["$rootScope",'$scope', 'dbService',
             return "topcoat-list__item";
         }
     }
-]);       
+]); 
+
+myApp.controller('ReviewCtrl', ["$rootScope",'$scope',
+    function ($rootScope, $scope) {
+        $scope.isFront = false;
+    }
+]);
+
+

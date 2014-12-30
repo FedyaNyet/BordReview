@@ -9,8 +9,66 @@
         <h1 class="topcoat-navigation-bar__title">BordReview</h1>
     </div>
 </div>
+<style>
+    .flip-container {
+        margin: 10% auto;
+        top:10px;
+        left:10px;
+        perspective: 1000;
+        -webkit-perspective: 1000;
+        border: 1px solid #ccc
+    }
+    /* flip the pane when hovered */
+    .flip-container.hover .flipper {
+        transform: rotateY(180deg);
+    }
+
+    .flip-container, .front, .back {
+        width: 320px;
+        height: 480px;
+    }
+
+    /* flip speed goes here */
+    .flipper {
+        transition: 0.6s;
+        transform-style: preserve-3d;
+
+        position: relative;
+    }
+
+    /* hide back of pane during swap */
+    .front, .back {
+        backface-visibility: hidden;
+
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    /* front pane, placed above back */
+    .front {
+        background-color: red;
+        z-index: 2;
+        transform: rotateY(0deg);
+    }
+
+    /* back, initially hidden pane */
+    .back {
+        background-color: blue;
+        transform: rotateY(180deg);
+    }
+</style>
 <div class="main-content topcoat-list__container list ">
     <div class="page">
-        Review Stuff
+        <div class="flip-container" ng-class="{'hover' : isFront}" ng-click="isFront=!isFront">
+            <div class="flipper">
+                <div class="front">
+                    <!-- front content -->
+                </div>
+                <div class="back">
+                    <!-- back content -->
+                </div>
+            </div>
+        </div>
     </div>
 </div>
